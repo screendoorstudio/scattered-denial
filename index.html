@@ -163,11 +163,6 @@
             opacity: 1;
         }
 
-        /* Statistics count-up */
-        .stat-number {
-            font-variant-numeric: tabular-nums;
-        }
-
         /* Video facade */
         .video-facade {
             position: relative;
@@ -246,14 +241,6 @@
         .news-accent {
             border-left: 3px solid var(--accent);
             padding-left: 1rem;
-        }
-
-        /* Stat dividers */
-        .stat-divider {
-            width: 1px;
-            height: 64px;
-            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-            opacity: 0.4;
         }
 
         /* Recognition strip rules */
@@ -353,27 +340,12 @@
     </blockquote>
 </section>
 
-<!-- Statistics Band -->
+<!-- Rotating Quotes & Stats -->
 <section class="py-12 md:py-16 bg-bg-secondary fade-up">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 items-center text-center stagger-children" data-stats>
-            <div class="md:px-6">
-                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="4" data-suffix="%">0%</p>
-                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">of interventional cardiologists are women</p>
-            </div>
-            <div class="md:px-6 md:border-l md:border-accent/20">
-                <p class="font-display font-700 text-4xl md:text-6xl text-accent stat-number" data-count-prefix="30–" data-count-to="40" data-suffix=" lbs">30–0 lbs</p>
-                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">weight of lead aprons worn daily</p>
-            </div>
-            <div class="md:px-6 md:border-l md:border-accent/20">
-                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="7">0</p>
-                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">episodes exposing the truth</p>
-            </div>
-            <div class="md:px-6 md:border-l md:border-accent/20">
-                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="1">0</p>
-                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">Emmy Award</p>
-            </div>
-        </div>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="rotating-quote" class="text-center mb-10 md:mb-12"></div>
+        <div id="rotating-stats" class="grid grid-cols-3 gap-4 md:gap-0 items-start text-center"></div>
+        <p class="text-center mt-8 text-txt-secondary/30 text-xs font-body tracking-wider uppercase">&#8635; Refresh for more</p>
     </div>
 </section>
 
@@ -690,38 +662,83 @@
         animObserver.observe(el);
     });
 
-    // === Count-up animation for stats ===
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const container = entry.target;
-                container.querySelectorAll('.stat-number').forEach(el => {
-                    const target = parseInt(el.dataset.countTo, 10);
-                    const suffix = el.dataset.suffix || '';
-                    const prefix = el.dataset.countPrefix || '';
-                    const duration = 1500;
-                    const startTime = performance.now();
+    // === Rotating Quotes & Stats ===
+    (function() {
+        var quotes = [
+            { text: "By the time you\u2019ve been in the cardiac catheterization laboratory for 20 years, you\u2019ve had the equivalent of 20,000 chest x-rays to the head and neck.", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "One in 25 of us will probably die of a radiation-induced cancer. That\u2019s a very high statistic.", speaker: "Dr. Juan Bernal", episode: "Episode 3" },
+            { text: "Over eight out of 10 of those brain cancers are going to be on the left side. That\u2019s where we get radiated.", speaker: "Interventional cardiologist", episode: "Episode 3" },
+            { text: "90 to 92% of all my skin cancers were on the left side of my body, and less than 7% were on the right.", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
+            { text: "The risk of a disabling orthopedic issue is 3 to 4% if you don\u2019t do what we do. If you do, it\u2019s over 60%. That\u2019s not a subtle figure.", speaker: "Researcher", episode: "Episode 4" },
+            { text: "Radiation exposure is cumulative. The exposure I had 30 years ago is still with me. The exposure I had 30 minutes ago is added on to what I had three decades ago.", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "I began to develop multiple skin cancers\u2026 on a monthly basis, then weekly basis, and by 2008\u20132009 I was going to the dermatologist almost every day.", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
+            { text: "I was diagnosed with breast cancer in my left breast \u2014 the breast closest to the radiation when I work. I did not have it in my family and don\u2019t have any genetic predisposition.", speaker: "Dr. Amy Armstrong", episode: "Episode 3" },
+            { text: "I ruptured my first disc after about 15 years of doing these procedures. The orthopedic surgeon told me that a lot of it was because of the lead apron I was wearing.", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "My right leg was paralyzed. I couldn\u2019t walk for over a month. I started thinking about my kids and my grandkids\u2026 all those dreams are shattered.", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "Yesterday was my last day in the cath lab\u2026 after 30-something years. My focus has been on patient care, rightly so, but it\u2019s been at the expense of our own health.", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "I couldn\u2019t functionally use my arms. I couldn\u2019t stand. I was taken to the hospital. I didn\u2019t know if I\u2019d walk again.", speaker: "Dean, Interventional cardiologist", episode: "Episode 7" },
+            { text: "We have not put adequate emphasis on staff safety, physician safety, nursing safety in the cardiac catheterization laboratory. That has been largely ignored.", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "My solution to solving the radiation issue was to take my badge and put it in the drawer.", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "Like CTE in football \u2014 they don\u2019t understand that by cracking helmets all these years they are sustaining irreversible brain damage. The same is true in the cardiac catheterization laboratory.", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "We\u2019re the first generation in humankind who has stood in front of radiation for 40 years and expected nothing to happen from it.", speaker: "Physician", episode: "Episode 7" },
+            { text: "My radiation is now one-tenth of what it used to be when I started. That\u2019s not the result of me getting better \u2014 it\u2019s the result of the technology getting better.", speaker: "Interventional cardiologist", episode: "Episode 5" },
+            { text: "In saving a 95-year-old, we exposed doctors, nurses, and x-ray technologists to the potential harmful effects of radiation. We may cut their lives short in the name of saving a 95-year-old.", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "The status quo is unacceptable. The goal is to create a coalition that we can drive this over the finish line.", speaker: "Dr. David Rizik", episode: "Episode 7" },
+            { text: "Taking care of our staff is the most important role that we do.", speaker: "Lab director", episode: "Episode 7" },
+        ];
 
-                    function update(now) {
-                        const elapsed = now - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        // Ease out cubic
-                        const eased = 1 - Math.pow(1 - progress, 3);
-                        const current = Math.round(eased * target);
-                        el.textContent = prefix + current + suffix;
-                        if (progress < 1) {
-                            requestAnimationFrame(update);
-                        }
-                    }
-                    requestAnimationFrame(update);
-                });
-                statsObserver.unobserve(container);
+        var stats = [
+            { number: "20,000", desc: "chest x-rays\u2019 equivalent exposure over a 20-year career" },
+            { number: "1 in 25", desc: "will die of a radiation-induced cancer" },
+            { number: "80%+", desc: "of brain cancers occur on the left side" },
+            { number: "90%", desc: "of one doctor\u2019s skin cancers were on his left side" },
+            { number: "60%", desc: "will have disabling orthopedic issues after 20 years" },
+            { number: "30%", desc: "have back problems within their first 5 years" },
+            { number: "34%", desc: "of cath lab time in high-risk cervical position" },
+            { number: "1/10th", desc: "the radiation exposure now possible with new tech" },
+            { number: "2%", desc: "of max threshold with 1,000 procedures using new tech" },
+            { number: "4%", desc: "of interventional cardiologists are women" },
+            { number: "30\u201340 lbs", desc: "weight of lead aprons worn daily" },
+            { number: "1 in 50", desc: "will die from radiation-induced cancers" },
+        ];
+
+        function shuffle(arr) {
+            var a = arr.slice();
+            for (var i = a.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
             }
-        });
-    }, { threshold: 0.3 });
+            return a;
+        }
 
-    const statsSection = document.querySelector('[data-stats]');
-    if (statsSection) statsObserver.observe(statsSection);
+        var q = shuffle(quotes)[0];
+        var qEl = document.getElementById('rotating-quote');
+        if (qEl) {
+            qEl.innerHTML =
+                '<blockquote>' +
+                '<p class="font-display font-300 text-xl sm:text-2xl md:text-3xl leading-snug md:leading-tight text-txt-primary/90">' +
+                '\u201C' + q.text + '\u201D</p>' +
+                '<footer class="mt-4 md:mt-6">' +
+                '<cite class="font-body text-txt-secondary text-sm not-italic">' +
+                '\u2014 ' + q.speaker + ' <span class="text-txt-secondary/50">' + q.episode + '</span></cite>' +
+                '</footer></blockquote>';
+        }
+
+        var picked = shuffle(stats).slice(0, 3);
+        var sEl = document.getElementById('rotating-stats');
+        if (sEl) {
+            var html = '';
+            for (var i = 0; i < picked.length; i++) {
+                var s = picked[i];
+                var border = i > 0 ? ' md:border-l md:border-accent/20' : '';
+                html += '<div class="md:px-6' + border + '">' +
+                    '<p class="font-display font-700 text-3xl sm:text-4xl md:text-5xl text-accent">' + s.number + '</p>' +
+                    '<p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[200px] mx-auto">' + s.desc + '</p>' +
+                    '</div>';
+            }
+            sEl.innerHTML = html;
+        }
+    })();
 
     // === Hero parallax ===
     let ticking = false;

@@ -12,33 +12,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **GitHub:** https://github.com/screendoorstudio/scattered-denial (auto-deploys on push to `main`)
 - **Vercel team:** screenteam (org ID: `team_lFuERAc0hMF2udyy9HgCjPRK`)
 - **GitHub account:** screendoorstudio
-- **Structure:** Single `index.html` + `images/` folder + `vercel.json` (security headers)
+- **Structure:** Single `index.html` + `images/` folder + `transcripts/` folder (9 episode transcripts) + `fetch_transcripts.py` + `vercel.json` (security headers)
 - **DNS pending:** Domain `scattereddenial.com` needs A records (`@` and `www` → `76.76.21.21`) set at the registrar (currently on Network Solutions nameservers)
 
 ## Site Architecture
 
 Single HTML file with these sections (in order):
 1. **Nav** — Logo + LinkedIn links
-2. **Hero** — Banner image with glow + parallax, Emmy badge overlay (pulsing amber glow), trailer CTA + LinkedIn button
-3. **Recognition Strip** — Centered "2025 Rocky Mountain Emmy Award Winner" with inline Emmy icon, thin amber rules above/below
-4. **Quote Interstitial #1** — Full-viewport Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal
-5. **Episode 7 Feature** — Latest episode with video facade (ID: `1xvupe3PZPA`)
+2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button. No Emmy badge overlay (removed for cleanliness).
+3. **Recognition Strip** — Centered "2025 Rocky Mountain Emmy Award Winner" with enlarged Emmy icon (`w-14 md:w-16`), thin amber rules above/below
+4. **Episode 7 Feature** — Latest episode with video facade (ID: `1xvupe3PZPA`). Positioned early for immediate video access.
+5. **Quote Interstitial #1** — Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal, `border-y border-accent/10` framing. Content-height (no `min-h-screen`).
 6. **Statistics Band** — 4 stats (4% women, 30–40 lbs aprons, 7 episodes, 1 Emmy) with count-up animation on scroll
 7. **Episode Grid (1–6)** — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col). All cards have descriptions.
-8. **Quote Interstitial #2** — Full-viewport Dr. Diethrich quote ("This radiation cannot hurt me")
+8. **Quote Interstitial #2** — Dr. Diethrich quote ("I felt that this radiation cannot hurt me"), "succumbed to brain tumor, 2017". Content-height with amber border framing.
 9. **PBS Version** — Full-width video facade (ID: `swpKf8BTidw`)
 10. **About** — Series description (7-part docuseries)
-11. **Quote Interstitial #3** — Full-viewport Dr. Rizik quote ("moral imperative" in amber)
+11. **Quote Interstitial #3** — Dr. Rizik quote ("moral imperative" in amber, linked to JSCAI article). Content-height with amber border framing.
 12. **ORSIF Webinar** — Image link to Radcliffe Cardiology webinar
-13. **Latest News** — PBS debut announcement
-14. **Join ORSIF** — CTA card linking to orsif.org
-15. **Footer** — Copyright 2025 + LinkedIn links
+13. **Latest News + Join ORSIF** — Merged 2-column grid: news on left, ORSIF CTA card on right. Stacks on mobile.
+14. **Footer** — Copyright 2026 + LinkedIn links
+
+### Layout compression (Feb 2026)
+The layout was compressed ~37% from ~7000px to ~4400px on desktop:
+- Quote interstitials: removed `min-h-screen`, use content-driven height with `py-16 md:py-20`
+- All content sections: tightened from `py-16 md:py-24` → `py-12 md:py-16`
+- Episode 7 moved above Quote #1 for early video visibility
+- Latest News and Join ORSIF merged into single 2-column section
+- Hero reduced from `min-h-[60vh]/[75vh]` → `min-h-[50vh]/[60vh]`
 
 ## Design System
 
 - **Typography:** Space Grotesk (headings, 300/500/700) + DM Sans (body, 400/500)
 - **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
-- **Signature moves:** Film grain overlay (SVG fractalNoise, 3.5% opacity), hero glow + parallax, Emmy badge with pulsing amber glow, quote interstitials with word-by-word reveal, statistics count-up animation, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver)
+- **Signature moves:** Film grain overlay (SVG fractalNoise, 3.5% opacity), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, statistics count-up animation, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver)
 - **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, replaces with iframe on click
 - **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
@@ -84,10 +91,31 @@ Always follow the 5-phase process in `SKILL.md`:
 |------|-----|
 | `Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp` (44KB) | Hero banner |
 | `Scattered-Denial_docuseries_...logo.png` (93KB) | Nav logo |
-| `Emmy-award.png` (776KB) | Emmy badge (hero overlay + recognition strip) |
+| `Emmy-award.png` (776KB) | Emmy icon (recognition strip only) |
+| `orsif-logo-white.png` | ORSIF logo (Join ORSIF card) |
 | `Scattered-Denial_webinar_ORSIF_2024.png` (756KB) | Webinar section (desktop) |
 | `image_desktop.webp` (57KB) | Webinar section (mobile via `<picture>`) |
 | `Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png` (503KB) | OG image |
+
+## Transcripts (`transcripts/`)
+
+All 9 YouTube video transcripts extracted via `youtube-transcript-api` (Python). All are **auto-generated** captions (no manual captions were uploaded). Expect transcription errors on medical terminology (e.g., "cardiovas ular", "addtive", "fluoroscopy" variants). Total: ~31,200 words.
+
+| File | Episode | Words |
+|------|---------|-------|
+| `ep1-the-radiation-problem.txt` | Episode 1: The Radiation Problem | 1,862 |
+| `ep2-history-of-radiation.txt` | Episode 2: The History of Radiation in Heart & Vascular Disease | 2,691 |
+| `ep3-radiation-induced-cancers.txt` | Episode 3: Radiation Induced Cancers? | 3,534 |
+| `ep4-the-orthopedic-problem.txt` | Episode 4: The Orthopedic Problem | 2,533 |
+| `ep5-potential-solutions.txt` | Episode 5: Potential Solutions | 3,782 |
+| `ep6-do-we-care.txt` | Episode 6: Do We Care? | 2,576 |
+| `ep7-what-has-changed.txt` | Episode 7: What Has Changed? | 6,022 |
+| `pbs-1-hour-version.txt` | PBS 1-Hour Version | 7,980 |
+| `ep7-trailer.txt` | Episode 7 Film Trailer | 239 |
+
+**Re-fetching:** Run `python3 fetch_transcripts.py` from the repo root. Requires `youtube-transcript-api` (`pip3 install youtube-transcript-api`).
+
+**Pull quotes:** `transcripts/pull-quotes.md` — 25 curated quotes/stats mined from all 9 transcripts, organized by theme (Shocking Statistics, Personal Testimonies, Culture of Denial, Solutions & Hope, Moral Urgency). Each has speaker attribution, episode source, and a note on why it's compelling. The 3 quotes already on the site are listed but marked "do not duplicate." Verify exact wording against video before publishing (auto-caption source).
 
 ## Reference Files
 
