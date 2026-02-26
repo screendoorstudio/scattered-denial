@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**ScatteredDenial.com** — website for the Emmy-winning documentary series *Scattered Denial: The Occupational Dangers of Radiation*. Multi-page static site (HTML + Tailwind CDN + inline CSS/JS) following the beautiful-website skill guidelines. Deployed on Vercel with auto-deploy from GitHub.
+**ScatteredDenial.com** — website for the Emmy-winning documentary series *Scattered Denial: The Occupational Dangers of Radiation*. Multi-page static site with SPA-like navigation (HTML + Tailwind CDN + shared `site.css`/`site.js`) following the beautiful-website skill guidelines. Deployed on Vercel with auto-deploy from GitHub.
 
 ## Current State (Feb 2026)
 
@@ -18,12 +18,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | File | Route | Purpose |
 |------|-------|---------|
-| `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form, background music |
+| `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form |
 | `about.html` | `/about` | Film summary + sponsors paragraph + filmmaker bios (Rizik, Wooley, Dickmann, Martin, B. Wooley, VAS Communications) |
 | `press.html` | `/press` | 14 press features from JACC, PBS, TCTMD, MM+M, DAIC, HonorHealth, Rocky Mountain Emmy, etc. |
+| `site.css` | `/site.css` | All custom CSS merged from all pages (single source of truth) |
+| `site.js` | `/site.js` | Shared JS: audio player, SPA navigation, animation init, parallax |
+| `SD-music.mp3` | `/SD-music.mp3` | Background music track (~580KB), plays via nav toggle |
 | `vercel.json` | — | `cleanUrls: true` + security headers (X-Content-Type-Options, X-Frame-Options) |
 | `favicon.svg` | `/favicon.svg` | Amber "SD" monogram on dark background |
-| `SD-music.mp3` | `/SD-music.mp3` | Background music track (~580KB), plays via nav toggle |
 | `images/` | — | Hero banner, nav logo, Emmy icon, ORSIF logo, webinar images, OG image |
 | `transcripts/` | — | 9 episode transcripts + `pull-quotes.md` curated reference |
 | `fetch_transcripts.py` | — | Script to re-fetch transcripts via `youtube-transcript-api` |
@@ -59,6 +61,19 @@ Sections in order:
 3. **Press Grid** — 11 articles in 2-column cards with color-coded category tags (amber=Press, blue=Academic, green=Broadcast, purple=Industry, gold=Award). Rocky Mountain Emmy card spans full width with Emmy trophy image, gold glow, and gradient background.
 4. **PBS Stations Banner** — National broadcast reach
 
+### SPA Navigation Architecture (Feb 2026)
+
+The site uses client-side navigation to keep background music uninterrupted across page changes:
+
+- **How it works:** Internal link clicks are intercepted by `site.js`. Instead of a full page reload, the target page is fetched, its `<main id="page-content">` is extracted and swapped into the current DOM. The `<nav>`, `<audio>`, `<footer>`, and `<script src="/site.js">` persist across navigations.
+- **Page-specific JS:** Scripts inside `<main>` tagged with `data-page-script` are re-executed after each SPA swap (e.g., video facades, quote word-reveal, rotating quotes, contact form on index.html).
+- **Shared JS in `site.js`:** Audio player, SPA router, IntersectionObserver animations, parallax — runs once on initial load, re-inits animations after each swap.
+- **CSS:** All custom styles live in `site.css` (merged superset from all pages). Tailwind CDN generates utility classes dynamically via MutationObserver, so new classes in swapped content are handled automatically.
+- **Active nav state:** `data-nav` attributes on nav links are matched against `window.location.pathname` to highlight the current page.
+- **Image paths:** All `src` attributes use absolute paths (`/images/...`) so content renders correctly regardless of which page is the SPA shell.
+- **Fallback:** If fetch fails, falls back to normal `window.location.href` navigation.
+- **Back/forward:** `popstate` event triggers re-fetch and content swap.
+
 ### Layout compression (Feb 2026)
 The layout was compressed ~37% from ~7000px to ~4400px on desktop:
 - Quote interstitials: content-driven height with `py-16 md:py-20`
@@ -73,7 +88,7 @@ The layout was compressed ~37% from ~7000px to ~4400px on desktop:
 - **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
 - **Signature moves:** Static film grain overlay (SVG fractalNoise, 3.5% opacity — animation removed to prevent flicker), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, rotating quotes/stats with fade transitions, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver), color-coded category tags on press page, monogram avatars on about page
 - **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, both removed from DOM when iframe loads
-- **Background music:** `SD-music.mp3` plays at 15% volume via nav toggle (speaker icon). Loops continuously, preference saved in localStorage, auto-pauses when YouTube video is clicked. Respects browser autoplay policies (requires user interaction on first visit).
+- **Background music:** `SD-music.mp3` plays at 15% volume via nav toggle (speaker icon). Loops continuously, preference saved in localStorage, auto-pauses when YouTube video is clicked. Respects browser autoplay policies (requires user interaction on first visit). Music persists uninterrupted across page navigations via SPA architecture.
 - **Favicon:** SVG — amber "SD" monogram on dark rounded square
 - **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
