@@ -45,6 +45,7 @@
             --text-secondary: #a1a1aa;
             --accent: #f59e0b;
             --accent-hover: #fbbf24;
+            --hero-parallax: 0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -57,6 +58,40 @@
             overflow-x: hidden;
         }
 
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(1) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before { display: none; }
+            .hero-parallax-img { transform: none !important; }
+            .quote-word { opacity: 1 !important; transition: none !important; }
+            .fade-up, .fade-left { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
+
         /* Scroll animations */
         .fade-up {
             opacity: 0;
@@ -64,6 +99,27 @@
             transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-left {
+            opacity: 0;
+            transform: translateX(-24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fade-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger children animation */
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .stagger-children.visible > * {
             opacity: 1;
             transform: translateY(0);
         }
@@ -79,6 +135,37 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 1;
+        }
+
+        /* Hero parallax */
+        .hero-parallax-img {
+            transform: translateY(calc(var(--hero-parallax) * 0.3px));
+            will-change: transform;
+        }
+
+        /* Emmy badge glow */
+        .emmy-badge {
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
+            animation: emmyPulse 3s ease-in-out infinite;
+        }
+        @keyframes emmyPulse {
+            0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4)); }
+            50% { filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.65)); }
+        }
+
+        /* Quote interstitials */
+        .quote-word {
+            opacity: 0.1;
+            transition: opacity 0.4s ease;
+            display: inline-block;
+        }
+        .quote-word.revealed {
+            opacity: 1;
+        }
+
+        /* Statistics count-up */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
         }
 
         /* Video facade */
@@ -160,6 +247,21 @@
             border-left: 3px solid var(--accent);
             padding-left: 1rem;
         }
+
+        /* Stat dividers */
+        .stat-divider {
+            width: 1px;
+            height: 64px;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+            opacity: 0.4;
+        }
+
+        /* Recognition strip rules */
+        .recognition-rule {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
@@ -191,10 +293,16 @@
 <section class="relative pt-20 min-h-[60vh] md:min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
     <div class="hero-glow"></div>
     <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <img src="images/Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp"
-             alt="Scattered Denial — Now Streaming — 2025 Emmy Winner"
-             class="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
-             loading="eager">
+        <div class="relative inline-block w-full">
+            <img src="images/Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp"
+                 alt="Scattered Denial — Now Streaming — 2025 Emmy Winner"
+                 class="w-full max-w-4xl mx-auto rounded-lg shadow-2xl hero-parallax-img"
+                 loading="eager">
+            <!-- Emmy Badge -->
+            <img src="images/Emmy-award.png"
+                 alt="2025 Rocky Mountain Emmy Award"
+                 class="emmy-badge absolute -top-4 -right-2 md:-top-6 md:-right-6 w-20 md:w-[120px] h-auto z-20">
+        </div>
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="https://youtu.be/nybIfcp3BZg?si=T9OV5jq90tkBQq09" target="_blank" rel="noopener noreferrer"
                class="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-bg-primary font-display font-700 text-sm rounded-full transition-colors">
@@ -207,6 +315,32 @@
             </a>
         </div>
     </div>
+</section>
+
+<!-- Recognition Strip -->
+<section class="py-6 md:py-8 fade-up">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="recognition-rule"></div>
+        <div class="flex items-center justify-center gap-3 py-5">
+            <img src="images/Emmy-award.png" alt="" class="w-8 h-auto opacity-80" aria-hidden="true">
+            <p class="font-display font-300 text-sm md:text-base tracking-wide text-txt-secondary">
+                2025 Rocky Mountain <span class="text-accent font-500">Emmy Award</span> Winner
+            </p>
+        </div>
+        <div class="recognition-rule"></div>
+    </div>
+</section>
+
+<!-- Quote Interstitial #1 -->
+<section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 quote-interstitial">
+    <blockquote class="max-w-4xl mx-auto text-center">
+        <p class="font-display font-300 text-xl sm:text-3xl md:text-5xl lg:text-6xl leading-snug md:leading-tight quote-reveal" data-quote>
+            The &lsquo;scatter&rsquo; is radiation scatter, and &lsquo;denial&rsquo; is how we&rsquo;ve denied that this was happening until it was too late.
+        </p>
+        <footer class="mt-8 md:mt-12 fade-left">
+            <cite class="font-body text-txt-secondary text-sm md:text-base not-italic">&mdash; Dr. David G. Rizik</cite>
+        </footer>
+    </blockquote>
 </section>
 
 <!-- Episode 7 Feature -->
@@ -223,92 +357,142 @@
     </div>
 </section>
 
-<!-- Episode Grid (1–6) -->
+<!-- Statistics Band -->
 <section class="py-16 md:py-24 bg-bg-secondary fade-up">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 items-center text-center stagger-children" data-stats>
+            <div class="md:px-6">
+                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="4" data-suffix="%">0%</p>
+                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">of interventional cardiologists are women</p>
+            </div>
+            <div class="md:px-6 md:border-l md:border-accent/20">
+                <p class="font-display font-700 text-4xl md:text-6xl text-accent stat-number" data-count-prefix="30–" data-count-to="40" data-suffix=" lbs">30–0 lbs</p>
+                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">weight of lead aprons worn daily</p>
+            </div>
+            <div class="md:px-6 md:border-l md:border-accent/20">
+                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="7">0</p>
+                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">episodes exposing the truth</p>
+            </div>
+            <div class="md:px-6 md:border-l md:border-accent/20">
+                <p class="font-display font-700 text-5xl md:text-7xl text-accent stat-number" data-count-to="1">0</p>
+                <p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[180px] mx-auto">Emmy Award</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Episode Grid (1–6) -->
+<section class="py-16 md:py-24 fade-up">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-display font-700 text-2xl md:text-4xl mb-10 text-center">Watch the Full 7-Part Series</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Episodes 1–2: Large cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 stagger-children">
 
             <!-- Episode 1 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="T4vtv0xN_Ds">
                     <img src="https://img.youtube.com/vi/T4vtv0xN_Ds/maxresdefault.jpg" alt="Episode 1: The Radiation Problem" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
                 <div class="p-5">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 1</p>
-                    <h3 class="font-display font-700 text-lg mb-1">The Radiation Problem</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 15:21</p>
+                    <h3 class="font-display font-700 text-lg mb-2">The Radiation Problem</h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed mb-2">What is radiation? How is it used in modern-day procedures? Why is chronic exposure potentially dangerous?</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">Running Time: 15:21</p>
                 </div>
             </div>
 
             <!-- Episode 2 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="gxb79F-GsRc">
                     <img src="https://img.youtube.com/vi/gxb79F-GsRc/maxresdefault.jpg" alt="Episode 2: The History of Radiation in Heart & Vascular Disease" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
                 <div class="p-5">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 2</p>
-                    <h3 class="font-display font-700 text-lg mb-1">The History of Radiation in Heart &amp; Vascular Disease</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 21:44</p>
+                    <h3 class="font-display font-700 text-lg mb-2">The History of Radiation in Heart &amp; Vascular Disease</h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed mb-2">Since its discovery, the x-ray has been a miraculous imaging technology. Its dangers have not been fully appreciated while its use has grown exponentially.</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">Running Time: 21:44</p>
                 </div>
             </div>
 
+        </div>
+
+        <!-- Episodes 3–6: Smaller cards in 2x2 / 4-column -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+
             <!-- Episode 3 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="YQNjQlUjzjw">
                     <img src="https://img.youtube.com/vi/YQNjQlUjzjw/maxresdefault.jpg" alt="Episode 3: Radiation Induced Cancers?" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
-                <div class="p-5">
+                <div class="p-4">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 3</p>
-                    <h3 class="font-display font-700 text-lg mb-1">Radiation Induced Cancers?</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 26:45</p>
+                    <h3 class="font-display font-700 text-base mb-2">Radiation Induced Cancers?</h3>
+                    <p class="font-body text-txt-secondary text-xs leading-relaxed mb-2">Cancer is a complex disease. Does radiation cause some cancers? It is hard to prove, but there are emerging details that perhaps make an argument.</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">26:45</p>
                 </div>
             </div>
 
             <!-- Episode 4 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="ot5djehxc4g">
                     <img src="https://img.youtube.com/vi/ot5djehxc4g/maxresdefault.jpg" alt="Episode 4: The Orthopedic Problem" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
-                <div class="p-5">
+                <div class="p-4">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 4</p>
-                    <h3 class="font-display font-700 text-lg mb-1">The Orthopedic Problem</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 17:59</p>
+                    <h3 class="font-display font-700 text-base mb-2">The Orthopedic Problem</h3>
+                    <p class="font-body text-txt-secondary text-xs leading-relaxed mb-2">The dangers of radiation are only part of the problem. People who work in these medical labs wear heavy lead aprons that put much strain on their bodies.</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">17:59</p>
                 </div>
             </div>
 
             <!-- Episode 5 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="upjs-5xwwN8">
                     <img src="https://img.youtube.com/vi/upjs-5xwwN8/maxresdefault.jpg" alt="Episode 5: Potential Solutions" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
-                <div class="p-5">
+                <div class="p-4">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 5</p>
-                    <h3 class="font-display font-700 text-lg mb-1">Potential Solutions</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 26:09</p>
+                    <h3 class="font-display font-700 text-base mb-2">Potential Solutions</h3>
+                    <p class="font-body text-txt-secondary text-xs leading-relaxed mb-2">There are new barrier technologies that look promising in the fight against radiation and orthopedic ailments. New imaging technologies may leave x-ray behind altogether.</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">26:09</p>
                 </div>
             </div>
 
             <!-- Episode 6 -->
-            <div class="episode-card fade-up">
+            <div class="episode-card">
                 <div class="video-facade" data-video-id="8Azu_RLmrvo">
                     <img src="https://img.youtube.com/vi/8Azu_RLmrvo/maxresdefault.jpg" alt="Episode 6: Do We Care?" loading="lazy">
                     <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
                 </div>
-                <div class="p-5">
+                <div class="p-4">
                     <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 6</p>
-                    <h3 class="font-display font-700 text-lg mb-1">Do We Care?</h3>
-                    <p class="text-txt-secondary text-sm font-body">Running Time: 19:03</p>
+                    <h3 class="font-display font-700 text-base mb-2">Do We Care?</h3>
+                    <p class="font-body text-txt-secondary text-xs leading-relaxed mb-2">We know there is a problem. Who is to blame and what can be done?</p>
+                    <p class="text-txt-secondary/60 text-xs font-body">19:03</p>
                 </div>
             </div>
 
         </div>
     </div>
+</section>
+
+<!-- Quote Interstitial #2 -->
+<section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 quote-interstitial">
+    <blockquote class="max-w-4xl mx-auto text-center">
+        <p class="font-display font-300 text-xl sm:text-3xl md:text-5xl lg:text-6xl leading-snug md:leading-tight quote-reveal" data-quote>
+            I felt: This radiation cannot hurt me.
+        </p>
+        <footer class="mt-8 md:mt-12 fade-left">
+            <cite class="font-body text-txt-secondary text-sm md:text-base not-italic">&mdash; Dr. Edward B. Diethrich</cite>
+            <p class="font-body text-txt-secondary/60 text-xs mt-1 italic">died of brain tumor, 2017</p>
+        </footer>
+    </blockquote>
 </section>
 
 <!-- PBS Version -->
@@ -327,9 +511,21 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-display font-700 text-2xl md:text-4xl mb-6">About the Series</h2>
         <p class="font-body text-txt-secondary text-lg leading-relaxed">
-            <span class="text-accent font-display font-500">SCATTERED DENIAL: THE OCCUPATIONAL DANGERS OF RADIATION</span> is a 6-part docuseries exploring the occupational hazards that cardiovascular interventionalists and their teams face from prolonged radiation exposure in cardiac catheterization laboratories. While some cardiologists have begun sounding the alarm about these risks, the problem is still widely underappreciated in the medical community and is virtually unheard of among patients and laypeople. Few people recognize that the cardiologists who are working to stem the tide of the world's leading cause of death put themselves at immense risk to do so, often compromising their physical quality of life and risking death.
+            <span class="text-accent font-display font-500">SCATTERED DENIAL: THE OCCUPATIONAL DANGERS OF RADIATION</span> is a 7-part docuseries exploring the occupational hazards that cardiovascular interventionalists and their teams face from prolonged radiation exposure in cardiac catheterization laboratories. While some cardiologists have begun sounding the alarm about these risks, the problem is still widely underappreciated in the medical community and is virtually unheard of among patients and laypeople. Few people recognize that the cardiologists who are working to stem the tide of the world's leading cause of death put themselves at immense risk to do so, often compromising their physical quality of life and risking death.
         </p>
     </div>
+</section>
+
+<!-- Quote Interstitial #3 -->
+<section class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 quote-interstitial">
+    <blockquote class="max-w-4xl mx-auto text-center">
+        <p class="font-display font-300 text-xl sm:text-3xl md:text-5xl lg:text-6xl leading-snug md:leading-tight quote-reveal" data-quote data-highlight="moral imperative">
+            Zero radiation to the healthcare worker is not an aspirational goal. It is a moral imperative.
+        </p>
+        <footer class="mt-8 md:mt-12 fade-left">
+            <cite class="font-body text-txt-secondary text-sm md:text-base not-italic">&mdash; Dr. David G. Rizik</cite>
+        </footer>
+    </blockquote>
 </section>
 
 <!-- ORSIF Webinar -->
@@ -380,7 +576,7 @@
 <!-- Footer -->
 <footer class="py-10 border-t border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="font-body text-txt-secondary text-sm">Copyright 2024. All Rights Reserved. The Procedure, LLC</p>
+        <p class="font-body text-txt-secondary text-sm">Copyright 2025. All Rights Reserved. The Procedure, LLC</p>
         <div class="flex items-center gap-5">
             <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
                class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
@@ -411,17 +607,121 @@
         });
     });
 
-    // Scroll-triggered fade-in animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+    // === Quote word-reveal setup ===
+    document.querySelectorAll('[data-quote]').forEach(el => {
+        const text = el.textContent.trim();
+        const highlightPhrase = el.dataset.highlight || '';
+        const highlightWords = highlightPhrase.toLowerCase().split(/\s+/).filter(Boolean);
+        el.innerHTML = '';
+        const words = text.split(/\s+/);
+        // Track position for highlight matching
+        const lowerWords = words.map(w => w.toLowerCase().replace(/[^a-z]/g, ''));
+
+        words.forEach((word, i) => {
+            const span = document.createElement('span');
+            span.className = 'quote-word';
+            span.textContent = word;
+            // Check if this word is part of the highlight phrase
+            if (highlightWords.length > 0) {
+                const cleanWord = lowerWords[i];
+                if (highlightWords.includes(cleanWord)) {
+                    // Verify it's part of a contiguous match
+                    let isMatch = false;
+                    for (let start = Math.max(0, i - highlightWords.length + 1); start <= i; start++) {
+                        const slice = lowerWords.slice(start, start + highlightWords.length);
+                        if (slice.join(' ') === highlightWords.join(' ')) {
+                            isMatch = true;
+                            break;
+                        }
+                    }
+                    if (isMatch) {
+                        span.style.color = 'var(--accent)';
+                    }
+                }
+            }
+            el.appendChild(span);
+            if (i < words.length - 1) {
+                el.appendChild(document.createTextNode(' '));
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // === Scroll-triggered animations (fade-up, fade-left, stagger-children, quote-reveal) ===
+    const animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+
+                if (el.classList.contains('stagger-children')) {
+                    el.classList.add('visible');
+                    Array.from(el.children).forEach((child, i) => {
+                        child.style.transitionDelay = `${i * 100}ms`;
+                    });
+                    animObserver.unobserve(el);
+                } else if (el.classList.contains('quote-reveal')) {
+                    // Word-by-word reveal
+                    const words = el.querySelectorAll('.quote-word');
+                    words.forEach((word, i) => {
+                        setTimeout(() => word.classList.add('revealed'), i * 80);
+                    });
+                    animObserver.unobserve(el);
+                } else {
+                    el.classList.add('visible');
+                    animObserver.unobserve(el);
+                }
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up, .fade-left, .stagger-children, .quote-reveal').forEach(el => {
+        animObserver.observe(el);
+    });
+
+    // === Count-up animation for stats ===
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                container.querySelectorAll('.stat-number').forEach(el => {
+                    const target = parseInt(el.dataset.countTo, 10);
+                    const suffix = el.dataset.suffix || '';
+                    const prefix = el.dataset.countPrefix || '';
+                    const duration = 1500;
+                    const startTime = performance.now();
+
+                    function update(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Ease out cubic
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(eased * target);
+                        el.textContent = prefix + current + suffix;
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        }
+                    }
+                    requestAnimationFrame(update);
+                });
+                statsObserver.unobserve(container);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    const statsSection = document.querySelector('[data-stats]');
+    if (statsSection) statsObserver.observe(statsSection);
+
+    // === Hero parallax ===
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                document.documentElement.style.setProperty('--hero-parallax', scrollY);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
