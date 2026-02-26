@@ -4,7 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a website-building workspace. Every site built here should look like a human designer made it — distinctive, intentional, and polished. The full design system and build process lives in `.claude/skills/beautiful-website/` (see `SKILL.md` there).
+**ScatteredDenial.com** — website for the Emmy-winning documentary series *Scattered Denial: The Occupational Dangers of Radiation*. Single-page site built as one `index.html` with Tailwind CDN + inline CSS/JS, following the beautiful-website skill guidelines.
+
+## Current State (Feb 2026)
+
+- **Live at:** https://scattered-denial.vercel.app (and scattereddenial.com once DNS A records are pointed to `76.76.21.21`)
+- **GitHub:** https://github.com/screendoorstudio/scattered-denial (auto-deploys on push to `main`)
+- **Vercel team:** screenteam (org ID: `team_lFuERAc0hMF2udyy9HgCjPRK`)
+- **GitHub account:** screendoorstudio
+- **Structure:** Single `index.html` + `images/` folder + `vercel.json` (security headers)
+- **DNS pending:** Domain `scattereddenial.com` needs A records (`@` and `www` → `76.76.21.21`) set at the registrar (currently on Network Solutions nameservers)
+
+## Site Architecture
+
+Single HTML file with these sections (in order):
+1. **Nav** — Logo + LinkedIn links
+2. **Hero** — Banner image with glow + parallax, Emmy badge overlay (pulsing amber glow), trailer CTA + LinkedIn button
+3. **Recognition Strip** — Centered "2025 Rocky Mountain Emmy Award Winner" with inline Emmy icon, thin amber rules above/below
+4. **Quote Interstitial #1** — Full-viewport Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal
+5. **Episode 7 Feature** — Latest episode with video facade (ID: `1xvupe3PZPA`)
+6. **Statistics Band** — 4 stats (4% women, 30–40 lbs aprons, 7 episodes, 1 Emmy) with count-up animation on scroll
+7. **Episode Grid (1–6)** — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col). All cards have descriptions.
+8. **Quote Interstitial #2** — Full-viewport Dr. Diethrich quote ("This radiation cannot hurt me")
+9. **PBS Version** — Full-width video facade (ID: `swpKf8BTidw`)
+10. **About** — Series description (7-part docuseries)
+11. **Quote Interstitial #3** — Full-viewport Dr. Rizik quote ("moral imperative" in amber)
+12. **ORSIF Webinar** — Image link to Radcliffe Cardiology webinar
+13. **Latest News** — PBS debut announcement
+14. **Join ORSIF** — CTA card linking to orsif.org
+15. **Footer** — Copyright 2025 + LinkedIn links
+
+## Design System
+
+- **Typography:** Space Grotesk (headings, 300/500/700) + DM Sans (body, 400/500)
+- **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
+- **Signature moves:** Film grain overlay (SVG fractalNoise, 3.5% opacity), hero glow + parallax, Emmy badge with pulsing amber glow, quote interstitials with word-by-word reveal, statistics count-up animation, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver)
+- **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, replaces with iframe on click
+- **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
 ## Design Taste
 
@@ -41,6 +77,17 @@ Always follow the 5-phase process in `SKILL.md`:
 3. **Tech Stack** — Pick the right tool for the scope
 4. **Build** — Hero that earns attention, purposeful sections, motion/delight, footer that doesn't phone it in
 5. **Review** — Self-check: does it look human-designed? Typography distinctive? Works on mobile? Proud to show it?
+
+## Local Images (`images/`)
+
+| File | Use |
+|------|-----|
+| `Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp` (44KB) | Hero banner |
+| `Scattered-Denial_docuseries_...logo.png` (93KB) | Nav logo |
+| `Emmy-award.png` (776KB) | Emmy badge (hero overlay + recognition strip) |
+| `Scattered-Denial_webinar_ORSIF_2024.png` (756KB) | Webinar section (desktop) |
+| `image_desktop.webp` (57KB) | Webinar section (mobile via `<picture>`) |
+| `Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png` (503KB) | OG image |
 
 ## Reference Files
 
