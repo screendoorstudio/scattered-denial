@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scattered Denial — The Occupational Dangers of Radiation | 2025 Emmy Winner</title>
+    <meta name="description" content="Scattered Denial is a 7-part docuseries exploring the occupational hazards that cardiovascular interventionalists face from prolonged radiation exposure. 2025 Emmy Award Winner. Now streaming.">
+    <meta property="og:site_name" content="Scattered Denial">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://scattereddenial.com/">
+    <meta property="og:title" content="Scattered Denial — The Occupational Dangers of Radiation">
+    <meta property="og:description" content="A 7-part docuseries exploring the occupational hazards that cardiovascular interventionalists face from prolonged radiation exposure. 2025 Emmy Award Winner.">
+    <meta property="og:image" content="https://scattereddenial.com/images/Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Scattered Denial — The Occupational Dangers of Radiation">
+    <meta name="twitter:description" content="A 7-part docuseries exploring the occupational hazards that cardiovascular interventionalists face from prolonged radiation exposure. 2025 Emmy Award Winner.">
+    <meta name="twitter:image" content="https://scattereddenial.com/images/Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        body: ['"DM Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        bg: { primary: '#0a0a0b', secondary: '#111113', card: '#18181b' },
+                        txt: { primary: '#fafafa', secondary: '#a1a1aa' },
+                        accent: { DEFAULT: '#f59e0b', hover: '#fbbf24' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent: #f59e0b;
+            --accent-hover: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Scroll animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero glow */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Video facade */
+        .video-facade {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--bg-card);
+            aspect-ratio: 16 / 9;
+        }
+        .video-facade img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .video-facade:hover img {
+            transform: scale(1.03);
+        }
+        .video-facade .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: rgba(245, 158, 11, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, transform 0.3s;
+            z-index: 2;
+        }
+        .video-facade:hover .play-btn {
+            background: var(--accent-hover);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--bg-primary);
+            margin-left: 3px;
+        }
+        .video-facade iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Episode cards */
+        .episode-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .episode-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* Nav logo */
+        .nav-logo {
+            height: 40px;
+            width: auto;
+        }
+        @media (min-width: 768px) {
+            .nav-logo { height: 48px; }
+        }
+
+        /* Amber left border for news */
+        .news-accent {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <a href="#" class="flex items-center">
+            <img src="images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
+                 alt="Scattered Denial logo"
+                 class="nav-logo">
+        </a>
+        <div class="flex items-center gap-4">
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Follow on LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body hidden sm:inline">
+                The Procedure
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative pt-20 min-h-[60vh] md:min-h-[75vh] flex flex-col items-center justify-center overflow-hidden">
+    <div class="hero-glow"></div>
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <img src="images/Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp"
+             alt="Scattered Denial — Now Streaming — 2025 Emmy Winner"
+             class="w-full max-w-4xl mx-auto rounded-lg shadow-2xl"
+             loading="eager">
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="https://youtu.be/nybIfcp3BZg?si=T9OV5jq90tkBQq09" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-bg-primary font-display font-700 text-sm rounded-full transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                Watch Episode 7 Film Trailer
+            </a>
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 border border-white/20 hover:border-accent text-txt-primary font-display font-500 text-sm rounded-full transition-colors">
+                Follow us on LinkedIn
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Episode 7 Feature -->
+<section class="py-16 md:py-24 fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-4">Watch Episode 7: What Has Changed?</h2>
+        <p class="font-body text-txt-secondary max-w-3xl mb-8 leading-relaxed">
+            So what has changed since our camera's stopped rolling in 2023? Plenty. <strong class="text-txt-primary">Episode 7</strong> explores how the radiation problem has been recognized, alliances built, and how new technologies are being developed and utilized in labs across the country.
+        </p>
+        <div class="video-facade" data-video-id="1xvupe3PZPA">
+            <img src="https://img.youtube.com/vi/1xvupe3PZPA/maxresdefault.jpg" alt="Episode 7: What Has Changed?" loading="lazy">
+            <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+    </div>
+</section>
+
+<!-- Episode Grid (1–6) -->
+<section class="py-16 md:py-24 bg-bg-secondary fade-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-10 text-center">Watch the Full 7-Part Series</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Episode 1 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="T4vtv0xN_Ds">
+                    <img src="https://img.youtube.com/vi/T4vtv0xN_Ds/maxresdefault.jpg" alt="Episode 1: The Radiation Problem" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 1</p>
+                    <h3 class="font-display font-700 text-lg mb-1">The Radiation Problem</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 15:21</p>
+                </div>
+            </div>
+
+            <!-- Episode 2 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="gxb79F-GsRc">
+                    <img src="https://img.youtube.com/vi/gxb79F-GsRc/maxresdefault.jpg" alt="Episode 2: The History of Radiation in Heart & Vascular Disease" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 2</p>
+                    <h3 class="font-display font-700 text-lg mb-1">The History of Radiation in Heart &amp; Vascular Disease</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 21:44</p>
+                </div>
+            </div>
+
+            <!-- Episode 3 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="YQNjQlUjzjw">
+                    <img src="https://img.youtube.com/vi/YQNjQlUjzjw/maxresdefault.jpg" alt="Episode 3: Radiation Induced Cancers?" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 3</p>
+                    <h3 class="font-display font-700 text-lg mb-1">Radiation Induced Cancers?</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 26:45</p>
+                </div>
+            </div>
+
+            <!-- Episode 4 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="ot5djehxc4g">
+                    <img src="https://img.youtube.com/vi/ot5djehxc4g/maxresdefault.jpg" alt="Episode 4: The Orthopedic Problem" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 4</p>
+                    <h3 class="font-display font-700 text-lg mb-1">The Orthopedic Problem</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 17:59</p>
+                </div>
+            </div>
+
+            <!-- Episode 5 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="upjs-5xwwN8">
+                    <img src="https://img.youtube.com/vi/upjs-5xwwN8/maxresdefault.jpg" alt="Episode 5: Potential Solutions" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 5</p>
+                    <h3 class="font-display font-700 text-lg mb-1">Potential Solutions</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 26:09</p>
+                </div>
+            </div>
+
+            <!-- Episode 6 -->
+            <div class="episode-card fade-up">
+                <div class="video-facade" data-video-id="8Azu_RLmrvo">
+                    <img src="https://img.youtube.com/vi/8Azu_RLmrvo/maxresdefault.jpg" alt="Episode 6: Do We Care?" loading="lazy">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                </div>
+                <div class="p-5">
+                    <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-1">Episode 6</p>
+                    <h3 class="font-display font-700 text-lg mb-1">Do We Care?</h3>
+                    <p class="text-txt-secondary text-sm font-body">Running Time: 19:03</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PBS Version -->
+<section class="py-16 md:py-24 fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-8 text-center">Watch the 1 Hour PBS Version</h2>
+        <div class="video-facade" data-video-id="swpKf8BTidw">
+            <img src="https://img.youtube.com/vi/swpKf8BTidw/maxresdefault.jpg" alt="Scattered Denial — PBS 1 Hour Version" loading="lazy">
+            <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="py-16 md:py-24 bg-bg-secondary fade-up">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-6">About the Series</h2>
+        <p class="font-body text-txt-secondary text-lg leading-relaxed">
+            <span class="text-accent font-display font-500">SCATTERED DENIAL: THE OCCUPATIONAL DANGERS OF RADIATION</span> is a 6-part docuseries exploring the occupational hazards that cardiovascular interventionalists and their teams face from prolonged radiation exposure in cardiac catheterization laboratories. While some cardiologists have begun sounding the alarm about these risks, the problem is still widely underappreciated in the medical community and is virtually unheard of among patients and laypeople. Few people recognize that the cardiologists who are working to stem the tide of the world's leading cause of death put themselves at immense risk to do so, often compromising their physical quality of life and risking death.
+        </p>
+    </div>
+</section>
+
+<!-- ORSIF Webinar -->
+<section class="py-16 md:py-24 fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-8 text-center">Watch The ORSIF Webinar on &ldquo;Scattered Denial&rdquo;</h2>
+        <a href="https://www.radcliffecardiology.com/webinars/occupational-dangers-radiation" target="_blank" rel="noopener noreferrer" class="block group">
+            <div class="overflow-hidden rounded-lg border border-white/10 group-hover:border-accent/50 transition-colors">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="images/image_desktop.webp">
+                    <img src="images/Scattered-Denial_webinar_ORSIF_2024.png"
+                         alt="ORSIF Webinar on Scattered Denial featuring physicians discussing radiation safety"
+                         class="w-full transition-transform duration-500 group-hover:scale-[1.02]"
+                         loading="lazy">
+                </picture>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Latest News -->
+<section class="py-16 md:py-24 bg-bg-secondary fade-up">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display font-700 text-2xl md:text-4xl mb-6">Latest News</h2>
+        <div class="news-accent">
+            <p class="font-body text-txt-secondary text-lg">
+                July 2024 — <strong class="text-txt-primary">Scattered Denial</strong> debuts on PBS
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Join ORSIF -->
+<section class="py-16 md:py-24 fade-up">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="bg-bg-card border border-white/10 rounded-2xl p-8 md:p-12">
+            <h2 class="font-display font-700 text-2xl md:text-3xl mb-4">Join ORSIF Today</h2>
+            <p class="font-body text-txt-secondary mb-6 max-w-xl mx-auto">Learn more about the Occupational Radiation Safety Institute Foundation and join the effort to protect healthcare workers.</p>
+            <a href="https://www.orsif.org" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-8 py-3 bg-accent hover:bg-accent-hover text-bg-primary font-display font-700 text-sm rounded-full transition-colors">
+                Visit orsif.org
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="font-body text-txt-secondary text-sm">Copyright 2024. All Rights Reserved. The Procedure, LLC</p>
+        <div class="flex items-center gap-5">
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body">
+                The Procedure, LLC
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Video facade: click to load YouTube iframe
+    document.querySelectorAll('.video-facade').forEach(facade => {
+        facade.addEventListener('click', function() {
+            if (this.querySelector('iframe')) return;
+            const id = this.dataset.videoId;
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            iframe.title = 'YouTube video player';
+            this.appendChild(iframe);
+        });
+    });
+
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+</script>
+
+</body>
+</html>
