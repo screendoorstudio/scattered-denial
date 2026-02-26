@@ -1,0 +1,267 @@
+/* === Shared variables === */
+:root {
+    --bg-primary: #0a0a0b;
+    --bg-secondary: #111113;
+    --bg-card: #18181b;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --accent: #f59e0b;
+    --accent-hover: #fbbf24;
+    --hero-parallax: 0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Film grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    z-index: 40;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before { display: none; }
+    .hero-parallax-img { transform: none !important; }
+    .quote-word { opacity: 1 !important; transition: none !important; }
+    .fade-up, .fade-left { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* === Scroll animations === */
+.fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-left {
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fade-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stagger-children.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === Nav === */
+.nav-logo { height: 40px; width: auto; }
+@media (min-width: 768px) { .nav-logo { height: 48px; } }
+
+/* === Shared accents === */
+.recognition-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    opacity: 0.3;
+}
+
+/* === Index: Hero === */
+.hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+}
+.hero-parallax-img {
+    transform: translateY(calc(var(--hero-parallax) * 0.3px));
+    will-change: transform;
+}
+
+/* === Index: Emmy badge === */
+.emmy-badge {
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
+    animation: emmyPulse 3s ease-in-out infinite;
+}
+@keyframes emmyPulse {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4)); }
+    50% { filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.65)); }
+}
+
+/* === Index: Quote interstitials === */
+.quote-word {
+    opacity: 0.1;
+    transition: opacity 0.4s ease;
+    display: inline-block;
+}
+.quote-word.revealed {
+    opacity: 1;
+}
+
+/* === Index: Video facade === */
+.video-facade {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--bg-card);
+    aspect-ratio: 16 / 9;
+}
+.video-facade img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.video-facade:hover img {
+    transform: scale(1.03);
+}
+.video-facade .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    background: rgba(245, 158, 11, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+    z-index: 2;
+}
+.video-facade:hover .play-btn {
+    background: var(--accent-hover);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+.play-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--bg-primary);
+    margin-left: 3px;
+}
+.video-facade iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* === Index: Episode cards === */
+.episode-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.episode-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+/* === Index: News accent === */
+.news-accent {
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+}
+
+/* === Press: Cards === */
+.press-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(245, 158, 11, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+}
+.press-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+/* === Press: Category tags === */
+.category-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    border: 1px solid;
+}
+.tag-press { color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.08); }
+.tag-academic { color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.08); }
+.tag-broadcast { color: #34d399; border-color: rgba(52, 211, 153, 0.3); background: rgba(52, 211, 153, 0.08); }
+.tag-industry { color: #c084fc; border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.08); }
+.tag-award { color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.12); }
+
+/* === Press: External link icon === */
+.ext-link-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 4px;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.press-card:hover .ext-link-icon {
+    opacity: 1;
+}
+
+/* === About: Monogram avatar === */
+.monogram {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.04));
+    color: var(--accent);
+}
+
+/* === About: Bio cards === */
+.bio-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+}
+.bio-card:hover {
+    border-color: rgba(245, 158, 11, 0.2);
+}

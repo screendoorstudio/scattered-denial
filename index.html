@@ -37,223 +37,23 @@
             }
         }
     </script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #111113;
-            --bg-card: #18181b;
-            --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --accent: #f59e0b;
-            --accent-hover: #fbbf24;
-            --hero-parallax: 0;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'DM Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        /* Film grain overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            pointer-events: none;
-            z-index: 40;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            body::before { display: none; }
-            .hero-parallax-img { transform: none !important; }
-            .quote-word { opacity: 1 !important; transition: none !important; }
-            .fade-up, .fade-left { opacity: 1 !important; transform: none !important; transition: none !important; }
-        }
-
-        /* Scroll animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-left {
-            opacity: 0;
-            transform: translateX(-24px);
-            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .fade-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Stagger children animation */
-        .stagger-children > * {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .stagger-children.visible > * {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hero glow */
-        .hero-glow {
-            position: absolute;
-            width: 600px;
-            height: 400px;
-            background: radial-gradient(ellipse, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Hero parallax */
-        .hero-parallax-img {
-            transform: translateY(calc(var(--hero-parallax) * 0.3px));
-            will-change: transform;
-        }
-
-        /* Emmy badge glow */
-        .emmy-badge {
-            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
-            animation: emmyPulse 3s ease-in-out infinite;
-        }
-        @keyframes emmyPulse {
-            0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4)); }
-            50% { filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.65)); }
-        }
-
-        /* Quote interstitials */
-        .quote-word {
-            opacity: 0.1;
-            transition: opacity 0.4s ease;
-            display: inline-block;
-        }
-        .quote-word.revealed {
-            opacity: 1;
-        }
-
-        /* Video facade */
-        .video-facade {
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            border-radius: 8px;
-            background: var(--bg-card);
-            aspect-ratio: 16 / 9;
-        }
-        .video-facade img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .video-facade:hover img {
-            transform: scale(1.03);
-        }
-        .video-facade .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 64px;
-            height: 64px;
-            background: rgba(245, 158, 11, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s, transform 0.3s;
-            z-index: 2;
-        }
-        .video-facade:hover .play-btn {
-            background: var(--accent-hover);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        .play-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--bg-primary);
-            margin-left: 3px;
-        }
-        .video-facade iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Episode cards */
-        .episode-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(245, 158, 11, 0.15);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .episode-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
-
-        /* Nav logo */
-        .nav-logo {
-            height: 40px;
-            width: auto;
-        }
-        @media (min-width: 768px) {
-            .nav-logo { height: 48px; }
-        }
-
-        /* Amber left border for news */
-        .news-accent {
-            border-left: 3px solid var(--accent);
-            padding-left: 1rem;
-        }
-
-        /* Recognition strip rules */
-        .recognition-rule {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent), transparent);
-            opacity: 0.3;
-        }
-    </style>
+    <link rel="stylesheet" href="/site.css">
 </head>
 <body>
 
 <!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-        <a href="#" class="flex items-center">
-            <img src="images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
+        <a href="/" class="flex items-center">
+            <img src="/images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
                  alt="Scattered Denial logo"
                  class="nav-logo">
         </a>
         <div class="flex items-center gap-4 sm:gap-6">
-            <a href="#episodes" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Episodes</a>
-            <a href="/press" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Press</a>
-            <a href="/about" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">About</a>
-            <a href="#contact" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
+            <a href="/#episodes" data-nav="/" class="text-accent hover:text-accent transition-colors font-display font-500 text-sm">Episodes</a>
+            <a href="/press" data-nav="/press" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Press</a>
+            <a href="/about" data-nav="/about" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">About</a>
+            <a href="/#contact" data-nav="/" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
             <!-- Music toggle -->
             <button id="music-toggle" aria-label="Toggle music" class="text-txt-secondary hover:text-accent transition-colors relative" title="Toggle music">
                 <!-- Speaker on icon -->
@@ -282,12 +82,14 @@
 <!-- Background music -->
 <audio id="bg-music" src="/SD-music.mp3" loop preload="auto"></audio>
 
+<main id="page-content">
+
 <!-- Hero Section -->
 <section class="relative pt-20 min-h-[50vh] md:min-h-[60vh] flex flex-col items-center justify-center overflow-hidden">
     <div class="hero-glow"></div>
     <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         <div class="relative inline-block w-full">
-            <img src="images/Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp"
+            <img src="/images/Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp"
                  alt="Scattered Denial — Now Streaming — 2025 Emmy Winner"
                  class="w-full max-w-4xl mx-auto rounded-lg shadow-2xl hero-parallax-img"
                  loading="eager">
@@ -311,7 +113,7 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="recognition-rule"></div>
         <div class="flex items-center justify-center gap-3 py-5">
-            <img src="images/Emmy-award.png" alt="" class="w-14 md:w-16 h-auto opacity-80" aria-hidden="true">
+            <img src="/images/Emmy-award.png" alt="" class="w-14 md:w-16 h-auto opacity-80" aria-hidden="true">
             <p class="font-display font-300 text-sm md:text-base tracking-wide text-txt-secondary">
                 2025 Rocky Mountain <span class="text-accent font-500">Emmy Award</span> Winner
             </p>
@@ -510,7 +312,7 @@
             <div class="overflow-hidden rounded-lg border border-white/10 group-hover:border-accent/50 transition-colors">
                 <picture>
                     <source media="(max-width: 767px)" srcset="images/image_desktop.webp">
-                    <img src="images/Scattered-Denial_webinar_ORSIF_2024.png"
+                    <img src="/images/Scattered-Denial_webinar_ORSIF_2024.png"
                          alt="ORSIF Webinar on Scattered Denial featuring physicians discussing radiation safety"
                          class="w-full transition-transform duration-500 group-hover:scale-[1.02]"
                          loading="lazy">
@@ -524,7 +326,7 @@
 <section class="py-12 md:py-16 bg-bg-secondary fade-up">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-bg-card border border-white/10 rounded-2xl p-8 md:p-10 text-center">
-            <img src="images/orsif-logo-white.png" alt="ORSIF — Occupational Radiation Safety in Interventional Fluoroscopy" class="mx-auto mb-6" style="max-width: 200px;" loading="lazy">
+            <img src="/images/orsif-logo-white.png" alt="ORSIF — Occupational Radiation Safety in Interventional Fluoroscopy" class="mx-auto mb-6" style="max-width: 200px;" loading="lazy">
             <h2 class="font-display font-700 text-2xl md:text-3xl mb-4">Join ORSIF Today</h2>
             <p class="font-body text-txt-secondary mb-6 max-w-xl mx-auto">Learn more about the Occupational Radiation Safety Institute Foundation and join the effort to protect healthcare workers.</p>
             <a href="https://www.orsif.org" target="_blank" rel="noopener noreferrer"
@@ -580,37 +382,18 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="py-10 border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p class="font-body text-txt-secondary text-sm">Copyright 2026. All Rights Reserved. The Procedure, LLC</p>
-        <div class="flex items-center gap-5">
-            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
-               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
-               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body">
-                The Procedure, LLC
-            </a>
-        </div>
-    </div>
-</footer>
-
-<script>
+<!-- Page-specific scripts (re-executed on SPA navigation) -->
+<script data-page-script>
     // Video facade: click to load YouTube iframe
-    document.querySelectorAll('.video-facade').forEach(facade => {
+    document.querySelectorAll('.video-facade').forEach(function(facade) {
         facade.addEventListener('click', function() {
             if (this.querySelector('iframe')) return;
-            const id = this.dataset.videoId;
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+            var id = this.dataset.videoId;
+            var iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
             iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
             iframe.allowFullscreen = true;
             iframe.title = 'YouTube video player';
-            // Remove thumbnail and play button before adding iframe
             var img = this.querySelector('img');
             var btn = this.querySelector('.play-btn');
             if (img) img.remove();
@@ -619,115 +402,76 @@
         });
     });
 
-    // === Quote word-reveal setup ===
-    document.querySelectorAll('[data-quote]').forEach(el => {
-        const text = el.textContent.trim();
-        const highlightPhrase = el.dataset.highlight || '';
-        const highlightLink = el.dataset.highlightLink || '';
-        const highlightWords = highlightPhrase.toLowerCase().split(/\s+/).filter(Boolean);
+    // Quote word-reveal setup
+    document.querySelectorAll('[data-quote]').forEach(function(el) {
+        var text = el.textContent.trim();
+        var highlightPhrase = el.dataset.highlight || '';
+        var highlightLink = el.dataset.highlightLink || '';
+        var highlightWords = highlightPhrase.toLowerCase().split(/\s+/).filter(Boolean);
         el.innerHTML = '';
-        const words = text.split(/\s+/);
-        // Track position for highlight matching
-        const lowerWords = words.map(w => w.toLowerCase().replace(/[^a-z]/g, ''));
+        var words = text.split(/\s+/);
+        var lowerWords = words.map(function(w) { return w.toLowerCase().replace(/[^a-z]/g, ''); });
 
-        words.forEach((word, i) => {
-            const span = document.createElement('span');
+        words.forEach(function(word, i) {
+            var span = document.createElement('span');
             span.className = 'quote-word';
             span.textContent = word;
-            // Check if this word is part of the highlight phrase
-            let isHighlighted = false;
+            var isHighlighted = false;
             if (highlightWords.length > 0) {
-                const cleanWord = lowerWords[i];
-                if (highlightWords.includes(cleanWord)) {
-                    // Verify it's part of a contiguous match
-                    for (let start = Math.max(0, i - highlightWords.length + 1); start <= i; start++) {
-                        const slice = lowerWords.slice(start, start + highlightWords.length);
+                var cleanWord = lowerWords[i];
+                if (highlightWords.indexOf(cleanWord) !== -1) {
+                    for (var start = Math.max(0, i - highlightWords.length + 1); start <= i; start++) {
+                        var slice = lowerWords.slice(start, start + highlightWords.length);
                         if (slice.join(' ') === highlightWords.join(' ')) {
                             isHighlighted = true;
                             break;
                         }
                     }
-                    if (isHighlighted) {
-                        span.style.color = 'var(--accent)';
-                    }
+                    if (isHighlighted) span.style.color = 'var(--accent)';
                 }
             }
-            // Wrap in link if highlighted and link exists
             if (isHighlighted && highlightLink) {
-                const a = document.createElement('a');
+                var a = document.createElement('a');
                 a.href = highlightLink;
                 a.target = '_blank';
                 a.rel = 'noopener noreferrer';
                 a.style.textDecoration = 'none';
                 a.style.borderBottom = '2px solid transparent';
                 a.style.transition = 'border-color 0.3s';
-                a.addEventListener('mouseenter', () => a.style.borderColor = 'var(--accent)');
-                a.addEventListener('mouseleave', () => a.style.borderColor = 'transparent');
+                a.addEventListener('mouseenter', function() { a.style.borderColor = 'var(--accent)'; });
+                a.addEventListener('mouseleave', function() { a.style.borderColor = 'transparent'; });
                 a.appendChild(span);
                 el.appendChild(a);
             } else {
                 el.appendChild(span);
             }
-            if (i < words.length - 1) {
-                el.appendChild(document.createTextNode(' '));
-            }
+            if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
         });
     });
 
-    // === Scroll-triggered animations (fade-up, fade-left, stagger-children, quote-reveal) ===
-    const animObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-
-                if (el.classList.contains('stagger-children')) {
-                    el.classList.add('visible');
-                    Array.from(el.children).forEach((child, i) => {
-                        child.style.transitionDelay = `${i * 100}ms`;
-                    });
-                    animObserver.unobserve(el);
-                } else if (el.classList.contains('quote-reveal')) {
-                    // Word-by-word reveal
-                    const words = el.querySelectorAll('.quote-word');
-                    words.forEach((word, i) => {
-                        setTimeout(() => word.classList.add('revealed'), i * 80);
-                    });
-                    animObserver.unobserve(el);
-                } else {
-                    el.classList.add('visible');
-                    animObserver.unobserve(el);
-                }
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.fade-up, .fade-left, .stagger-children, .quote-reveal').forEach(el => {
-        animObserver.observe(el);
-    });
-
-    // === Rotating Quotes & Stats ===
+    // Rotating Quotes & Stats
     (function() {
         var quotes = [
-            { text: "By the time you\u2019ve been in the cardiac catheterization laboratory for 20 years, you\u2019ve had the equivalent of 20,000 chest x-rays to the head and neck.", speaker: "Interventional cardiologist", episode: "Episode 1" },
-            { text: "One in 25 of us will probably die of a radiation-induced cancer. That\u2019s a very high statistic.", speaker: "Dr. Juan Bernal", episode: "Episode 3" },
-            { text: "Over eight out of 10 of those brain cancers are going to be on the left side. That\u2019s where we get radiated.", speaker: "Interventional cardiologist", episode: "Episode 3" },
-            { text: "90 to 92% of all my skin cancers were on the left side of my body, and less than 7% were on the right.", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
-            { text: "The risk of a disabling orthopedic issue is 3 to 4% if you don\u2019t do what we do. If you do, it\u2019s over 60%. That\u2019s not a subtle figure.", speaker: "Researcher", episode: "Episode 4" },
-            { text: "Radiation exposure is cumulative. The exposure I had 30 years ago is still with me. The exposure I had 30 minutes ago is added on to what I had three decades ago.", speaker: "Interventional cardiologist", episode: "Episode 1" },
-            { text: "I began to develop multiple skin cancers\u2026 on a monthly basis, then weekly basis, and by 2008\u20132009 I was going to the dermatologist almost every day.", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
-            { text: "I was diagnosed with breast cancer in my left breast \u2014 the breast closest to the radiation when I work. I did not have it in my family and don\u2019t have any genetic predisposition.", speaker: "Dr. Amy Armstrong", episode: "Episode 3" },
-            { text: "I ruptured my first disc after about 15 years of doing these procedures. The orthopedic surgeon told me that a lot of it was because of the lead apron I was wearing.", speaker: "Bob Foster", episode: "Episode 4" },
-            { text: "My right leg was paralyzed. I couldn\u2019t walk for over a month. I started thinking about my kids and my grandkids\u2026 all those dreams are shattered.", speaker: "Bob Foster", episode: "Episode 4" },
-            { text: "Yesterday was my last day in the cath lab\u2026 after 30-something years. My focus has been on patient care, rightly so, but it\u2019s been at the expense of our own health.", speaker: "Bob Foster", episode: "Episode 4" },
-            { text: "I couldn\u2019t functionally use my arms. I couldn\u2019t stand. I was taken to the hospital. I didn\u2019t know if I\u2019d walk again.", speaker: "Dean, Interventional cardiologist", episode: "Episode 7" },
-            { text: "We have not put adequate emphasis on staff safety, physician safety, nursing safety in the cardiac catheterization laboratory. That has been largely ignored.", speaker: "Interventional cardiologist", episode: "Episode 1" },
-            { text: "My solution to solving the radiation issue was to take my badge and put it in the drawer.", speaker: "Interventional cardiologist", episode: "Episode 6" },
-            { text: "Like CTE in football \u2014 they don\u2019t understand that by cracking helmets all these years they are sustaining irreversible brain damage. The same is true in the cardiac catheterization laboratory.", speaker: "Interventional cardiologist", episode: "Episode 6" },
-            { text: "We\u2019re the first generation in humankind who has stood in front of radiation for 40 years and expected nothing to happen from it.", speaker: "Physician", episode: "Episode 7" },
-            { text: "My radiation is now one-tenth of what it used to be when I started. That\u2019s not the result of me getting better \u2014 it\u2019s the result of the technology getting better.", speaker: "Interventional cardiologist", episode: "Episode 5" },
-            { text: "In saving a 95-year-old, we exposed doctors, nurses, and x-ray technologists to the potential harmful effects of radiation. We may cut their lives short in the name of saving a 95-year-old.", speaker: "Interventional cardiologist", episode: "Episode 6" },
-            { text: "The status quo is unacceptable. The goal is to create a coalition that we can drive this over the finish line.", speaker: "Dr. David Rizik", episode: "Episode 7" },
-            { text: "Taking care of our staff is the most important role that we do.", speaker: "Lab director", episode: "Episode 7" },
+            { text: "\u201CBy the time you\u2019ve been in the cardiac catheterization laboratory for 20 years, you\u2019ve had the equivalent of 20,000 chest x-rays to the head and neck.\u201D", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "\u201COne in 25 of us will probably die of a radiation-induced cancer. That\u2019s a very high statistic.\u201D", speaker: "Dr. Juan Bernal", episode: "Episode 3" },
+            { text: "\u201COver eight out of 10 of those brain cancers are going to be on the left side. That\u2019s where we get radiated.\u201D", speaker: "Interventional cardiologist", episode: "Episode 3" },
+            { text: "\u201C90 to 92% of all my skin cancers were on the left side of my body, and less than 7% were on the right.\u201D", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
+            { text: "\u201CThe risk of a disabling orthopedic issue is 3 to 4% if you don\u2019t do what we do. If you do, it\u2019s over 60%. That\u2019s not a subtle figure.\u201D", speaker: "Researcher", episode: "Episode 4" },
+            { text: "\u201CRadiation exposure is cumulative. The exposure I had 30 years ago is still with me. The exposure I had 30 minutes ago is added on to what I had three decades ago.\u201D", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "\u201CI began to develop multiple skin cancers\u2026 on a monthly basis, then weekly basis, and by 2008\u20132009 I was going to the dermatologist almost every day.\u201D", speaker: "Dr. John Thomas Egan Jr.", episode: "Episode 3" },
+            { text: "\u201CI was diagnosed with breast cancer in my left breast \u2014 the breast closest to the radiation when I work. I did not have it in my family and don\u2019t have any genetic predisposition.\u201D", speaker: "Dr. Amy Armstrong", episode: "Episode 3" },
+            { text: "\u201CI ruptured my first disc after about 15 years of doing these procedures. The orthopedic surgeon told me that a lot of it was because of the lead apron I was wearing.\u201D", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "\u201CMy right leg was paralyzed. I couldn\u2019t walk for over a month. I started thinking about my kids and my grandkids\u2026 all those dreams are shattered.\u201D", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "\u201CYesterday was my last day in the cath lab\u2026 after 30-something years. My focus has been on patient care, rightly so, but it\u2019s been at the expense of our own health.\u201D", speaker: "Bob Foster", episode: "Episode 4" },
+            { text: "\u201CI couldn\u2019t functionally use my arms. I couldn\u2019t stand. I was taken to the hospital. I didn\u2019t know if I\u2019d walk again.\u201D", speaker: "Dean, Interventional cardiologist", episode: "Episode 7" },
+            { text: "\u201CWe have not put adequate emphasis on staff safety, physician safety, nursing safety in the cardiac catheterization laboratory. That has been largely ignored.\u201D", speaker: "Interventional cardiologist", episode: "Episode 1" },
+            { text: "\u201CMy solution to solving the radiation issue was to take my badge and put it in the drawer.\u201D", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "\u201CLike CTE in football \u2014 they don\u2019t understand that by cracking helmets all these years they are sustaining irreversible brain damage. The same is true in the cardiac catheterization laboratory.\u201D", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "\u201CWe\u2019re the first generation in humankind who has stood in front of radiation for 40 years and expected nothing to happen from it.\u201D", speaker: "Physician", episode: "Episode 7" },
+            { text: "\u201CMy radiation is now one-tenth of what it used to be when I started. That\u2019s not the result of me getting better \u2014 it\u2019s the result of the technology getting better.\u201D", speaker: "Interventional cardiologist", episode: "Episode 5" },
+            { text: "\u201CIn saving a 95-year-old, we exposed doctors, nurses, and x-ray technologists to the potential harmful effects of radiation. We may cut their lives short in the name of saving a 95-year-old.\u201D", speaker: "Interventional cardiologist", episode: "Episode 6" },
+            { text: "\u201CThe status quo is unacceptable. The goal is to create a coalition that we can drive this over the finish line.\u201D", speaker: "Dr. David Rizik", episode: "Episode 7" },
+            { text: "\u201CTaking care of our staff is the most important role that we do.\u201D", speaker: "Lab director", episode: "Episode 7" },
         ];
 
         var stats = [
@@ -763,7 +507,7 @@
                 qEl.innerHTML =
                     '<blockquote>' +
                     '<p class="font-display font-300 text-xl sm:text-2xl md:text-3xl leading-snug md:leading-tight text-txt-primary/90">' +
-                    '\u201C' + q.text + '\u201D</p>' +
+                    q.text + '</p>' +
                     '<footer class="mt-4 md:mt-6">' +
                     '<cite class="font-body text-txt-secondary text-sm not-italic">' +
                     '\u2014 ' + q.speaker + ' <span class="text-txt-secondary/50">' + q.episode + '</span></cite>' +
@@ -802,27 +546,6 @@
         }
     })();
 
-    // === Hero parallax ===
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                const scrollY = window.scrollY;
-                document.documentElement.style.setProperty('--hero-parallax', scrollY);
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            const target = document.querySelector(a.getAttribute('href'));
-            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-        });
-    });
-
     // Contact form (placeholder — shows thank-you on submit)
     var contactForm = document.getElementById('contact-form');
     if (contactForm) {
@@ -832,66 +555,30 @@
             document.getElementById('contact-success').classList.remove('hidden');
         });
     }
-
-    // === Background music ===
-    (function() {
-        var audio = document.getElementById('bg-music');
-        var toggle = document.getElementById('music-toggle');
-        var iconOn = document.getElementById('music-icon-on');
-        var iconOff = document.getElementById('music-icon-off');
-        var VOLUME = 0.15;
-
-        audio.volume = VOLUME;
-
-        function updateIcons(playing) {
-            if (playing) {
-                iconOn.classList.remove('hidden');
-                iconOff.classList.add('hidden');
-            } else {
-                iconOn.classList.add('hidden');
-                iconOff.classList.remove('hidden');
-            }
-        }
-
-        // Check if user previously enabled music
-        var musicPref = localStorage.getItem('sd-music');
-
-        // On first click anywhere, start music if user had it on (autoplay policy workaround)
-        if (musicPref === 'on') {
-            var startOnInteraction = function() {
-                audio.play().then(function() { updateIcons(true); }).catch(function() {});
-                document.removeEventListener('click', startOnInteraction);
-                document.removeEventListener('scroll', startOnInteraction);
-            };
-            document.addEventListener('click', startOnInteraction, { once: true });
-            document.addEventListener('scroll', startOnInteraction, { once: true });
-        }
-
-        toggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (audio.paused) {
-                audio.play().then(function() {
-                    updateIcons(true);
-                    localStorage.setItem('sd-music', 'on');
-                }).catch(function() {});
-            } else {
-                audio.pause();
-                updateIcons(false);
-                localStorage.setItem('sd-music', 'off');
-            }
-        });
-
-        // Pause music when a YouTube video starts playing
-        document.querySelectorAll('.video-facade').forEach(function(facade) {
-            facade.addEventListener('click', function() {
-                if (!audio.paused) {
-                    audio.pause();
-                    updateIcons(false);
-                }
-            });
-        });
-    })();
 </script>
+
+</main>
+
+<!-- Footer -->
+<footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="font-body text-txt-secondary text-sm">Copyright 2026. All Rights Reserved. The Procedure, LLC</p>
+        <div class="flex items-center gap-5">
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body">
+                The Procedure, LLC
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="/site.js"></script>
 
 </body>
 </html>

@@ -37,141 +37,7 @@
             }
         }
     </script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #111113;
-            --bg-card: #18181b;
-            --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --accent: #f59e0b;
-            --accent-hover: #fbbf24;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'DM Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        /* Film grain overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            animation: grain 0.5s steps(1) infinite;
-        }
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -10%); }
-            20% { transform: translate(-15%, 5%); }
-            30% { transform: translate(7%, -25%); }
-            40% { transform: translate(-5%, 25%); }
-            50% { transform: translate(-15%, 10%); }
-            60% { transform: translate(15%, 0%); }
-            70% { transform: translate(0%, 15%); }
-            80% { transform: translate(3%, 35%); }
-            90% { transform: translate(-10%, 10%); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            body::before { display: none; }
-            .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
-        }
-
-        .fade-up {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stagger-children > * {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .stagger-children.visible > * {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Nav logo */
-        .nav-logo {
-            height: 40px;
-            width: auto;
-        }
-        @media (min-width: 768px) {
-            .nav-logo { height: 48px; }
-        }
-
-        /* Press card */
-        .press-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(245, 158, 11, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-            display: flex;
-            flex-direction: column;
-        }
-        .press-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        /* Category tag */
-        .category-tag {
-            display: inline-block;
-            font-size: 0.65rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.2rem 0.6rem;
-            border-radius: 9999px;
-            border: 1px solid;
-        }
-        .tag-press { color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.08); }
-        .tag-academic { color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.08); }
-        .tag-broadcast { color: #34d399; border-color: rgba(52, 211, 153, 0.3); background: rgba(52, 211, 153, 0.08); }
-        .tag-industry { color: #c084fc; border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.08); }
-        .tag-award { color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.12); }
-
-        /* Recognition strip rules */
-        .recognition-rule {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent), transparent);
-            opacity: 0.3;
-        }
-
-        /* External link icon */
-        .ext-link-icon {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            margin-left: 4px;
-            vertical-align: middle;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .press-card:hover .ext-link-icon {
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="/site.css">
 </head>
 <body>
 
@@ -179,15 +45,28 @@
 <nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         <a href="/" class="flex items-center">
-            <img src="images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
+            <img src="/images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
                  alt="Scattered Denial logo"
                  class="nav-logo">
         </a>
         <div class="flex items-center gap-4 sm:gap-6">
-            <a href="/#episodes" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Episodes</a>
-            <a href="/press" class="text-accent font-display font-500 text-sm">Press</a>
-            <a href="/about" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">About</a>
-            <a href="/#contact" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
+            <a href="/#episodes" data-nav="/" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Episodes</a>
+            <a href="/press" data-nav="/press" class="text-accent font-display font-500 text-sm">Press</a>
+            <a href="/about" data-nav="/about" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">About</a>
+            <a href="/#contact" data-nav="/" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
+            <!-- Music toggle -->
+            <button id="music-toggle" aria-label="Toggle music" class="text-txt-secondary hover:text-accent transition-colors relative" title="Toggle music">
+                <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+                <svg id="music-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+            </button>
             <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
                class="text-txt-secondary hover:text-accent transition-colors" aria-label="Follow on LinkedIn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -197,6 +76,11 @@
         </div>
     </div>
 </nav>
+
+<!-- Background music -->
+<audio id="bg-music" src="/SD-music.mp3" loop preload="auto"></audio>
+
+<main id="page-content">
 
 <!-- Page Header -->
 <section class="pt-28 pb-12 md:pt-36 md:pb-16">
@@ -267,7 +151,7 @@
                     <div class="flex-shrink-0">
                         <div class="relative">
                             <div style="position:absolute;inset:-12px;background:radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
-                            <img src="images/Emmy-award.png" alt="Rocky Mountain Emmy Award" class="relative" style="width: 100px; height: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4));" loading="lazy">
+                            <img src="/images/Emmy-award.png" alt="Rocky Mountain Emmy Award" class="relative" style="width: 100px; height: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4));" loading="lazy">
                         </div>
                     </div>
                     <div class="flex-1 text-center sm:text-left">
@@ -463,6 +347,8 @@
     </div>
 </section>
 
+</main>
+
 <!-- Footer -->
 <footer class="py-10 border-t border-white/5">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -482,29 +368,7 @@
     </div>
 </footer>
 
-<script>
-    // Scroll-triggered animations
-    const animObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                if (el.classList.contains('stagger-children')) {
-                    el.classList.add('visible');
-                    Array.from(el.children).forEach((child, i) => {
-                        child.style.transitionDelay = `${i * 80}ms`;
-                    });
-                } else {
-                    el.classList.add('visible');
-                }
-                animObserver.unobserve(el);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.fade-up, .stagger-children').forEach(el => {
-        animObserver.observe(el);
-    });
-</script>
+<script src="/site.js"></script>
 
 </body>
 </html>
