@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**ScatteredDenial.com** — website for the Emmy-winning documentary series *Scattered Denial: The Occupational Dangers of Radiation*. Single-page site built as one `index.html` with Tailwind CDN + inline CSS/JS, following the beautiful-website skill guidelines.
+**ScatteredDenial.com** — website for the Emmy-winning documentary series *Scattered Denial: The Occupational Dangers of Radiation*. Multi-page static site (HTML + Tailwind CDN + inline CSS/JS) following the beautiful-website skill guidelines. Deployed on Vercel with auto-deploy from GitHub.
 
 ## Current State (Feb 2026)
 
@@ -12,41 +12,67 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **GitHub:** https://github.com/screendoorstudio/scattered-denial (auto-deploys on push to `main`)
 - **Vercel team:** screenteam (org ID: `team_lFuERAc0hMF2udyy9HgCjPRK`)
 - **GitHub account:** screendoorstudio
-- **Structure:** Single `index.html` + `images/` folder + `transcripts/` folder (9 episode transcripts) + `fetch_transcripts.py` + `vercel.json` (security headers)
 - **DNS pending:** Domain `scattereddenial.com` needs A records (`@` and `www` → `76.76.21.21`) set at the registrar (currently on Network Solutions nameservers)
 
-## Site Architecture
+### Site Structure
 
-Single HTML file with these sections (in order):
-1. **Nav** — Logo + LinkedIn links
-2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button. No Emmy badge overlay (removed for cleanliness).
-3. **Recognition Strip** — Centered "2025 Rocky Mountain Emmy Award Winner" with enlarged Emmy icon (`w-14 md:w-16`), thin amber rules above/below
-4. **Episode 7 Feature** — Latest episode with video facade (ID: `1xvupe3PZPA`). Positioned early for immediate video access.
-5. **Quote Interstitial #1** — Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal, `border-y border-accent/10` framing. Content-height (no `min-h-screen`).
-6. **Statistics Band** — 4 stats (4% women, 30–40 lbs aprons, 7 episodes, 1 Emmy) with count-up animation on scroll
-7. **Episode Grid (1–6)** — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col). All cards have descriptions.
-8. **Quote Interstitial #2** — Dr. Diethrich quote ("I felt that this radiation cannot hurt me"), "succumbed to brain tumor, 2017". Content-height with amber border framing.
+| File | Route | Purpose |
+|------|-------|---------|
+| `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form |
+| `about.html` | `/about` | Film summary + filmmaker bios (Rizik, Wooley, Dickmann, Martin, B. Wooley, VAS Communications) |
+| `press.html` | `/press` | 13 press features from JACC, PBS, TCTMD, MM+M, DAIC, HonorHealth, etc. |
+| `vercel.json` | — | `cleanUrls: true` + security headers (X-Content-Type-Options, X-Frame-Options) |
+| `favicon.svg` | `/favicon.svg` | Amber "SD" monogram on dark background |
+| `images/` | — | Hero banner, nav logo, Emmy icon, ORSIF logo, webinar images, OG image |
+| `transcripts/` | — | 9 episode transcripts + `pull-quotes.md` curated reference |
+| `fetch_transcripts.py` | — | Script to re-fetch transcripts via `youtube-transcript-api` |
+
+## Site Architecture — `index.html`
+
+Sections in order:
+1. **Nav** — Logo + About / Press / Contact links + LinkedIn icons
+2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button
+3. **Recognition Strip** — "2025 Rocky Mountain Emmy Award Winner" with Emmy icon, thin amber rules
+4. **Episode 7 Feature** — Latest episode video facade (ID: `1xvupe3PZPA`), positioned early for immediate access
+5. **Quote Interstitial #1** — Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal
+6. **Rotating Quotes & Stats** — Random pull quote + 3 random stats from a pool of 20 quotes and 12 stats, reshuffled via "Refresh for more" button (no page reload). ~4,400 possible combinations.
+7. **Episode Grid (1–6)** — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col)
+8. **Quote Interstitial #2** — Dr. Diethrich quote ("I felt that this radiation cannot hurt me"), "succumbed to brain tumor, 2017"
 9. **PBS Version** — Full-width video facade (ID: `swpKf8BTidw`)
 10. **About** — Series description (7-part docuseries)
-11. **Quote Interstitial #3** — Dr. Rizik quote ("moral imperative" in amber, linked to JSCAI article). Content-height with amber border framing.
+11. **Quote Interstitial #3** — Dr. Rizik quote ("moral imperative" in amber, linked to JSCAI article)
 12. **ORSIF Webinar** — Image link to Radcliffe Cardiology webinar
-13. **Latest News + Join ORSIF** — Merged 2-column grid: news on left, ORSIF CTA card on right. Stacks on mobile.
-14. **Footer** — Copyright 2026 + LinkedIn links
+13. **Latest News + Join ORSIF** — Merged 2-column grid
+14. **Contact** — Name/email/subject/message form with thank-you state (placeholder, no backend yet)
+15. **Footer** — Copyright 2026 + LinkedIn links
+
+## Site Architecture — `about.html`
+
+1. **Film Summary** — 6 paragraphs covering scope, title meaning, production, PBS broadcast, Emmy win, call to action
+2. **Filmmaker Bios** — Featured card for Dr. Rizik + 2x2 grid for Wooley, Dickmann, Martin, B. Wooley + VAS Communications card. Monogram avatars (placeholder for real photos).
+
+## Site Architecture — `press.html`
+
+1. **Count Strip** — 13 features / 8 publications / 5+ PBS stations
+2. **Featured Article** — JACC journal piece (Dec 2024) in large card
+3. **Press Grid** — 10 articles in 2-column cards with color-coded category tags (amber=Press, blue=Academic, green=Broadcast, purple=Industry)
+4. **PBS Stations Banner** — National broadcast reach
 
 ### Layout compression (Feb 2026)
 The layout was compressed ~37% from ~7000px to ~4400px on desktop:
-- Quote interstitials: removed `min-h-screen`, use content-driven height with `py-16 md:py-20`
-- All content sections: tightened from `py-16 md:py-24` → `py-12 md:py-16`
+- Quote interstitials: content-driven height with `py-16 md:py-20`
+- All content sections: `py-12 md:py-16`
 - Episode 7 moved above Quote #1 for early video visibility
 - Latest News and Join ORSIF merged into single 2-column section
-- Hero reduced from `min-h-[60vh]/[75vh]` → `min-h-[50vh]/[60vh]`
+- Hero: `min-h-[50vh] md:min-h-[60vh]`
 
 ## Design System
 
 - **Typography:** Space Grotesk (headings, 300/500/700) + DM Sans (body, 400/500)
 - **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
-- **Signature moves:** Film grain overlay (SVG fractalNoise, 3.5% opacity), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, statistics count-up animation, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver)
-- **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, replaces with iframe on click
+- **Signature moves:** Static film grain overlay (SVG fractalNoise, 3.5% opacity — animation removed to prevent flicker), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, rotating quotes/stats with fade transitions, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver), color-coded category tags on press page, monogram avatars on about page
+- **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, both removed from DOM when iframe loads
+- **Favicon:** SVG — amber "SD" monogram on dark rounded square
 - **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
 ## Design Taste
@@ -116,6 +142,13 @@ All 9 YouTube video transcripts extracted via `youtube-transcript-api` (Python).
 **Re-fetching:** Run `python3 fetch_transcripts.py` from the repo root. Requires `youtube-transcript-api` (`pip3 install youtube-transcript-api`).
 
 **Pull quotes:** `transcripts/pull-quotes.md` — 25 curated quotes/stats mined from all 9 transcripts, organized by theme (Shocking Statistics, Personal Testimonies, Culture of Denial, Solutions & Hope, Moral Urgency). Each has speaker attribution, episode source, and a note on why it's compelling. The 3 quotes already on the site are listed but marked "do not duplicate." Verify exact wording against video before publishing (auto-caption source).
+
+## Pending / Next Steps
+
+- **DNS:** Point `scattereddenial.com` A records (`@` and `www`) to `76.76.21.21` at registrar
+- **Contact form backend:** Wire up the placeholder form to Formspree, Vercel serverless function, or similar
+- **Filmmaker photos:** Replace monogram avatars on `/about` with real headshots (with permission)
+- **Analytics:** Add Vercel Analytics or Plausible for traffic tracking
 
 ## Reference Files
 
