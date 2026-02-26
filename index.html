@@ -254,6 +254,21 @@
             <a href="/press" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Press</a>
             <a href="/about" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">About</a>
             <a href="#contact" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
+            <!-- Music toggle -->
+            <button id="music-toggle" aria-label="Toggle music" class="text-txt-secondary hover:text-accent transition-colors relative" title="Toggle music">
+                <!-- Speaker on icon -->
+                <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+                <!-- Speaker off icon -->
+                <svg id="music-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+            </button>
             <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
                class="text-txt-secondary hover:text-accent transition-colors" aria-label="Follow on LinkedIn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -263,6 +278,9 @@
         </div>
     </div>
 </nav>
+
+<!-- Background music -->
+<audio id="bg-music" src="/SD-music.mp3" loop preload="auto"></audio>
 
 <!-- Hero Section -->
 <section class="relative pt-20 min-h-[50vh] md:min-h-[60vh] flex flex-col items-center justify-center overflow-hidden">
@@ -814,6 +832,65 @@
             document.getElementById('contact-success').classList.remove('hidden');
         });
     }
+
+    // === Background music ===
+    (function() {
+        var audio = document.getElementById('bg-music');
+        var toggle = document.getElementById('music-toggle');
+        var iconOn = document.getElementById('music-icon-on');
+        var iconOff = document.getElementById('music-icon-off');
+        var VOLUME = 0.15;
+
+        audio.volume = VOLUME;
+
+        function updateIcons(playing) {
+            if (playing) {
+                iconOn.classList.remove('hidden');
+                iconOff.classList.add('hidden');
+            } else {
+                iconOn.classList.add('hidden');
+                iconOff.classList.remove('hidden');
+            }
+        }
+
+        // Check if user previously enabled music
+        var musicPref = localStorage.getItem('sd-music');
+
+        // On first click anywhere, start music if user had it on (autoplay policy workaround)
+        if (musicPref === 'on') {
+            var startOnInteraction = function() {
+                audio.play().then(function() { updateIcons(true); }).catch(function() {});
+                document.removeEventListener('click', startOnInteraction);
+                document.removeEventListener('scroll', startOnInteraction);
+            };
+            document.addEventListener('click', startOnInteraction, { once: true });
+            document.addEventListener('scroll', startOnInteraction, { once: true });
+        }
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (audio.paused) {
+                audio.play().then(function() {
+                    updateIcons(true);
+                    localStorage.setItem('sd-music', 'on');
+                }).catch(function() {});
+            } else {
+                audio.pause();
+                updateIcons(false);
+                localStorage.setItem('sd-music', 'off');
+            }
+        });
+
+        // Pause music when a YouTube video starts playing
+        document.querySelectorAll('.video-facade').forEach(function(facade) {
+            facade.addEventListener('click', function() {
+                if (!audio.paused) {
+                    audio.pause();
+                    updateIcons(false);
+                }
+            });
+        });
+    })();
 </script>
 
 </body>
