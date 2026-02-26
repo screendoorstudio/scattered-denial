@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press — Scattered Denial | The Occupational Dangers of Radiation</title>
+    <meta name="description" content="Press coverage, media features, and academic publications about Scattered Denial, the Emmy-winning documentary series on occupational radiation hazards in cardiology.">
+    <meta property="og:site_name" content="Scattered Denial">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://scattereddenial.com/press">
+    <meta property="og:title" content="Press — Scattered Denial">
+    <meta property="og:description" content="Press coverage and media features about the Emmy-winning documentary series on occupational radiation hazards in cardiology.">
+    <meta property="og:image" content="https://scattereddenial.com/images/Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Press — Scattered Denial">
+    <meta name="twitter:description" content="Press coverage and media features about the Emmy-winning documentary series on occupational radiation hazards in cardiology.">
+    <meta name="twitter:image" content="https://scattereddenial.com/images/Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        body: ['"DM Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        bg: { primary: '#0a0a0b', secondary: '#111113', card: '#18181b' },
+                        txt: { primary: '#fafafa', secondary: '#a1a1aa' },
+                        accent: { DEFAULT: '#f59e0b', hover: '#fbbf24' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent: #f59e0b;
+            --accent-hover: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(1) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before { display: none; }
+            .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .stagger-children.visible > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nav logo */
+        .nav-logo {
+            height: 40px;
+            width: auto;
+        }
+        @media (min-width: 768px) {
+            .nav-logo { height: 48px; }
+        }
+
+        /* Press card */
+        .press-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(245, 158, 11, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .press-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Category tag */
+        .category-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid;
+        }
+        .tag-press { color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.08); }
+        .tag-academic { color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.08); }
+        .tag-broadcast { color: #34d399; border-color: rgba(52, 211, 153, 0.3); background: rgba(52, 211, 153, 0.08); }
+        .tag-industry { color: #c084fc; border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.08); }
+
+        /* Recognition strip rules */
+        .recognition-rule {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+            opacity: 0.3;
+        }
+
+        /* External link icon */
+        .ext-link-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 4px;
+            vertical-align: middle;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .press-card:hover .ext-link-icon {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center">
+            <img src="images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
+                 alt="Scattered Denial logo"
+                 class="nav-logo">
+        </a>
+        <div class="flex items-center gap-4 sm:gap-6">
+            <a href="/press" class="text-accent font-display font-500 text-sm">Press</a>
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Follow on LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body hidden sm:inline">
+                The Procedure
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<section class="pt-28 pb-12 md:pt-36 md:pb-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-3 fade-up">Press &amp; Media</p>
+        <h1 class="font-display font-700 text-4xl md:text-6xl leading-tight mb-6 fade-up">In the News</h1>
+        <p class="font-body text-txt-secondary text-lg md:text-xl max-w-3xl leading-relaxed fade-up">
+            Coverage of <em>Scattered Denial: The Occupational Dangers of Radiation</em> across medical journals, healthcare media, and public broadcasting.
+        </p>
+    </div>
+</section>
+
+<!-- Count Strip -->
+<section class="pb-10 md:pb-14 fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="recognition-rule"></div>
+        <div class="flex items-center justify-center gap-8 md:gap-14 py-5 text-center">
+            <div>
+                <p class="font-display font-700 text-3xl md:text-4xl text-accent">13</p>
+                <p class="font-body text-txt-secondary text-xs mt-1">Features</p>
+            </div>
+            <div class="w-px h-10 bg-gradient-to-b from-transparent via-accent to-transparent opacity-30"></div>
+            <div>
+                <p class="font-display font-700 text-3xl md:text-4xl text-accent">8</p>
+                <p class="font-body text-txt-secondary text-xs mt-1">Publications</p>
+            </div>
+            <div class="w-px h-10 bg-gradient-to-b from-transparent via-accent to-transparent opacity-30"></div>
+            <div>
+                <p class="font-display font-700 text-3xl md:text-4xl text-accent">5+</p>
+                <p class="font-body text-txt-secondary text-xs mt-1">PBS Stations</p>
+            </div>
+        </div>
+        <div class="recognition-rule"></div>
+    </div>
+</section>
+
+<!-- Press Grid -->
+<section class="pb-16 md:pb-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Featured: JACC -->
+        <div class="mb-12 fade-up">
+            <a href="https://www.jacc.org/doi/10.1016/j.jacc.2024.08.065" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card md:flex-row md:items-start md:gap-8" style="padding: 2rem 2.5rem; border-color: rgba(245, 158, 11, 0.25);">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="category-tag tag-academic font-display">Academic Journal</span>
+                            <span class="font-body text-txt-secondary/50 text-xs">December 3, 2024</span>
+                        </div>
+                        <p class="font-display font-500 text-accent text-sm mb-2">Journal of the American College of Cardiology (JACC)</p>
+                        <h2 class="font-display font-700 text-xl md:text-2xl leading-snug mb-3">
+                            Scattered Denial: Reflections on the Occupational Hazards and Health Risks Over a 35-Year Career in Interventional Cardiology
+                            <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                        </h2>
+                        <p class="font-body text-txt-secondary text-sm leading-relaxed mb-3">A personal reflection by Dr. David G. Rizik on the occupational hazards discovered over a 35-year career&mdash;from colleagues&rsquo; chronic pain and life-altering surgeries to cancers potentially linked to occupational radiation exposure in the catheterization laboratory.</p>
+                        <p class="font-body text-txt-secondary/50 text-xs">David G. Rizik, MD &middot; JACC Vol. 84, No. 23 &middot; DOI: 10.1016/j.jacc.2024.08.065</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Grid of articles -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children">
+
+            <!-- Arizona PBS Feature -->
+            <a href="https://azpbs.org/2024/09/scattered-denial-the-occupational-dangers-of-radiation/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-broadcast font-display">Broadcast</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">September 10, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">Arizona PBS</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Scattered Denial: The Occupational Dangers of Radiation
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">&ldquo;Every day across the globe, doctors and their teams risk their own lives to save yours by exposing themselves to the deadly occupational hazards of radiation exposure.&rdquo; National PBS premiere.</p>
+                </div>
+            </a>
+
+            <!-- PBS Arizona Horizon -->
+            <a href="https://www.pbs.org/video/scattered-denial-black-theatre-troupe-the-poisoned-pen-anniversary-i0hl06/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-broadcast font-display">TV Interview</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">September 3, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">PBS &mdash; Arizona Horizon</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Dr. Rizik on Arizona Horizon
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">Dr. David Rizik discusses the documentary and how advanced radiation shields can reduce exposure by greater than 99%, with six states already adopting new protocols.</p>
+                </div>
+            </a>
+
+            <!-- TCTMD -->
+            <a href="https://www.tctmd.com/news/weight-lifetime-lead-cardiologists-seek-ease-burden" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-press font-display">Press</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">July 4, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">TCTMD</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        The Weight of a Lifetime of Lead: Cardiologists Seek to Ease the Burden
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">An extended dialogue among interventional cardiologists on the occupational toll of lead aprons and radiation exposure. &ldquo;There is no excuse for us to not have this solved already.&rdquo;</p>
+                </div>
+            </a>
+
+            <!-- ACIST Medical -->
+            <a href="https://distributors.acist.com/scattered-denial/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-industry font-display">Industry</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">June 21, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">ACIST Medical</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        New Docuseries: Scattered Denial
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">ACIST Medical highlights the six-episode series exploring workplace hazards in catheterization laboratories and the technologies that can reduce radiation exposure.</p>
+                </div>
+            </a>
+
+            <!-- MM+M -->
+            <a href="https://www.mmm-online.com/home/channel/the-third-m/scattered-denial-documentary-hcp-radiation/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-press font-display">Press</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">May 8, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">MM+M (Medical Marketing &amp; Media)</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Documentary Reveals Truth Behind HCPs&rsquo; Radiation Exposure, Cancer Risks
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">Jack O&rsquo;Brien profiles the documentary, drawing parallels between cumulative radiation damage in medical professionals and head injuries in NFL players.</p>
+                </div>
+            </a>
+
+            <!-- DAIC -->
+            <a href="https://www.dicardiology.com/content/documentary-led-honorhealth-research-institute-focuses-injuries-doctors-and-nurses-working" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-press font-display">Press</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">May 7, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">DAIC (Diagnostic and Interventional Cardiology)</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Documentary Led by HonorHealth Research Institute Focuses on Injuries to Doctors and Nurses
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">Comprehensive coverage of the documentary&rsquo;s findings: 50% of interventional cardiologists report orthopedic issues, with disproportionate cancer patterns on the left side of the body.</p>
+                </div>
+            </a>
+
+            <!-- HonorHealth -->
+            <a href="https://www.honorhealthresearch.org/news-research/documentary-led-by-honorhealth-research-institute-focuses-on-injuries-to-doctors-and-nurses-working-in-cardiology/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-press font-display">Press Release</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">April 28, 2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">HonorHealth Research Institute</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Documentary Led by HonorHealth Research Institute Focuses on Injuries to Doctors and Nurses Working in Cardiology
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">The premiere announcement: Dr. Rizik describes the documentary as &ldquo;a personal journey; a journey of discovery: What haven&rsquo;t we done to protect our doctors and nurses?&rdquo;</p>
+                </div>
+            </a>
+
+            <!-- Radcliffe Cardiology Webinar -->
+            <a href="https://www.radcliffecardiology.com/webinars/occupational-dangers-radiation" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-industry font-display">Webinar</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">Radcliffe Cardiology</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        ORSIF Webinar: Occupational Dangers of Radiation
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">A panel of physicians discuss the findings from <em>Scattered Denial</em> and the path forward for radiation safety in interventional cardiology.</p>
+                </div>
+            </a>
+
+            <!-- ORSIF -->
+            <a href="https://www.orsif.org/scattered-denial" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-industry font-display">Organization</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">ORSIF</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Scattered Denial: Radiation Risks in the Cath Lab
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">The Occupational Radiation Safety in Interventional Fluoroscopy foundation&rsquo;s dedicated page for the documentary series and streaming information.</p>
+                </div>
+            </a>
+
+            <!-- VuMedi -->
+            <a href="https://www.vumedi.com/video/scattered-denial-episode-1-the-radiation-problem/" target="_blank" rel="noopener noreferrer" class="block">
+                <div class="press-card h-full">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="category-tag tag-industry font-display">Platform</span>
+                        <span class="font-body text-txt-secondary/50 text-xs">2024</span>
+                    </div>
+                    <p class="font-display font-500 text-accent/80 text-sm mb-2">VuMedi</p>
+                    <h3 class="font-display font-700 text-lg leading-snug mb-2">
+                        Scattered Denial Full Series
+                        <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </h3>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed">All episodes available on VuMedi, the physician video education platform, reaching the medical professional audience directly.</p>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- PBS Stations Banner -->
+        <div class="mt-12 fade-up">
+            <div class="bg-bg-secondary border border-white/5 rounded-xl p-8 md:p-10 text-center">
+                <p class="font-display font-500 text-sm text-accent tracking-widest uppercase mb-4">Broadcast Nationally on PBS</p>
+                <p class="font-body text-txt-secondary leading-relaxed max-w-2xl mx-auto">
+                    <em>Scattered Denial</em> aired on PBS stations across the country, including
+                    <strong class="text-txt-primary">Arizona PBS</strong>,
+                    <strong class="text-txt-primary">WOSU (Ohio)</strong>,
+                    <strong class="text-txt-primary">KET (Kentucky)</strong>,
+                    and other member stations via NETA distribution. The series also screened on <strong class="text-txt-primary">PBS Arizona Horizon</strong> with Dr. Rizik.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="font-body text-txt-secondary text-sm">Copyright 2026. All Rights Reserved. The Procedure, LLC</p>
+        <div class="flex items-center gap-5">
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body">
+                The Procedure, LLC
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Scroll-triggered animations
+    const animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                if (el.classList.contains('stagger-children')) {
+                    el.classList.add('visible');
+                    Array.from(el.children).forEach((child, i) => {
+                        child.style.transitionDelay = `${i * 80}ms`;
+                    });
+                } else {
+                    el.classList.add('visible');
+                }
+                animObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up, .stagger-children').forEach(el => {
+        animObserver.observe(el);
+    });
+</script>
+
+</body>
+</html>
