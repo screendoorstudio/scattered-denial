@@ -30,13 +30,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Site Architecture — `index.html`
 
 Sections in order:
-1. **Nav** — Logo + About / Press / Contact links + LinkedIn icons
+1. **Nav** — Logo + Episodes / Press / About / Contact links + LinkedIn icon (Episodes anchors to `#episodes` episode grid; "The Procedure" link removed)
 2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button
 3. **Recognition Strip** — "2025 Rocky Mountain Emmy Award Winner" with Emmy icon, thin amber rules
 4. **Episode 7 Feature** — Latest episode video facade (ID: `1xvupe3PZPA`), positioned early for immediate access
 5. **Quote Interstitial #1** — Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal
 6. **Rotating Quotes & Stats** — Random pull quote + 3 random stats from a pool of 20 quotes and 12 stats, reshuffled via "Refresh for more" button (no page reload). ~4,400 possible combinations.
-7. **Episode Grid (1–6)** — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col)
+7. **Episode Grid (1–6)** (`id="episodes"`) — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col). Nav "Episodes" link anchors here.
 8. **Quote Interstitial #2** — Dr. Diethrich quote ("I felt that this radiation cannot hurt me"), "succumbed to brain tumor, 2017"
 9. **PBS Version** — Full-width video facade (ID: `swpKf8BTidw`)
 10. **About** — Series description (7-part docuseries)
