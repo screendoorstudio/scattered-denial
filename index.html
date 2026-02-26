@@ -335,7 +335,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="rotating-quote" class="text-center mb-10 md:mb-12"></div>
         <div id="rotating-stats" class="grid grid-cols-3 gap-4 md:gap-0 items-start text-center"></div>
-        <p class="text-center mt-8 text-txt-secondary/30 text-xs font-body tracking-wider uppercase">&#8635; Refresh for more</p>
+        <button id="refresh-quotes" class="block mx-auto mt-8 px-5 py-2 text-txt-secondary/40 hover:text-accent text-xs font-body tracking-wider uppercase border border-white/5 hover:border-accent/30 rounded-full transition-colors cursor-pointer bg-transparent">&#8635; Refresh for more</button>
     </div>
 </section>
 
@@ -750,32 +750,51 @@
             return a;
         }
 
-        var q = shuffle(quotes)[0];
-        var qEl = document.getElementById('rotating-quote');
-        if (qEl) {
-            qEl.innerHTML =
-                '<blockquote>' +
-                '<p class="font-display font-300 text-xl sm:text-2xl md:text-3xl leading-snug md:leading-tight text-txt-primary/90">' +
-                '\u201C' + q.text + '\u201D</p>' +
-                '<footer class="mt-4 md:mt-6">' +
-                '<cite class="font-body text-txt-secondary text-sm not-italic">' +
-                '\u2014 ' + q.speaker + ' <span class="text-txt-secondary/50">' + q.episode + '</span></cite>' +
-                '</footer></blockquote>';
+        function renderQuotesAndStats() {
+            var q = shuffle(quotes)[0];
+            var qEl = document.getElementById('rotating-quote');
+            if (qEl) {
+                qEl.style.opacity = '0';
+                qEl.style.transform = 'translateY(12px)';
+                qEl.innerHTML =
+                    '<blockquote>' +
+                    '<p class="font-display font-300 text-xl sm:text-2xl md:text-3xl leading-snug md:leading-tight text-txt-primary/90">' +
+                    '\u201C' + q.text + '\u201D</p>' +
+                    '<footer class="mt-4 md:mt-6">' +
+                    '<cite class="font-body text-txt-secondary text-sm not-italic">' +
+                    '\u2014 ' + q.speaker + ' <span class="text-txt-secondary/50">' + q.episode + '</span></cite>' +
+                    '</footer></blockquote>';
+                setTimeout(function() { qEl.style.transition = 'opacity 0.5s, transform 0.5s'; qEl.style.opacity = '1'; qEl.style.transform = 'translateY(0)'; }, 30);
+            }
+
+            var picked = shuffle(stats).slice(0, 3);
+            var sEl = document.getElementById('rotating-stats');
+            if (sEl) {
+                var html = '';
+                for (var i = 0; i < picked.length; i++) {
+                    var s = picked[i];
+                    var border = i > 0 ? ' md:border-l md:border-accent/20' : '';
+                    html += '<div class="md:px-6' + border + '" style="opacity:0;transform:translateY(12px);transition:opacity 0.5s ' + (i * 0.1) + 's,transform 0.5s ' + (i * 0.1) + 's">' +
+                        '<p class="font-display font-700 text-3xl sm:text-4xl md:text-5xl text-accent">' + s.number + '</p>' +
+                        '<p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[200px] mx-auto">' + s.desc + '</p>' +
+                        '</div>';
+                }
+                sEl.innerHTML = html;
+                setTimeout(function() {
+                    var children = sEl.children;
+                    for (var i = 0; i < children.length; i++) {
+                        children[i].style.opacity = '1';
+                        children[i].style.transform = 'translateY(0)';
+                    }
+                }, 30);
+            }
         }
 
-        var picked = shuffle(stats).slice(0, 3);
-        var sEl = document.getElementById('rotating-stats');
-        if (sEl) {
-            var html = '';
-            for (var i = 0; i < picked.length; i++) {
-                var s = picked[i];
-                var border = i > 0 ? ' md:border-l md:border-accent/20' : '';
-                html += '<div class="md:px-6' + border + '">' +
-                    '<p class="font-display font-700 text-3xl sm:text-4xl md:text-5xl text-accent">' + s.number + '</p>' +
-                    '<p class="font-body text-txt-secondary text-xs md:text-sm mt-2 max-w-[200px] mx-auto">' + s.desc + '</p>' +
-                    '</div>';
-            }
-            sEl.innerHTML = html;
+        renderQuotesAndStats();
+
+        var refreshBtn = document.getElementById('refresh-quotes');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', renderQuotesAndStats);
         }
     })();
 
