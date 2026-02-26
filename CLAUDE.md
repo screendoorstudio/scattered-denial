@@ -18,11 +18,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | File | Route | Purpose |
 |------|-------|---------|
-| `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form |
-| `about.html` | `/about` | Film summary + filmmaker bios (Rizik, Wooley, Dickmann, Martin, B. Wooley, VAS Communications) |
-| `press.html` | `/press` | 13 press features from JACC, PBS, TCTMD, MM+M, DAIC, HonorHealth, etc. |
+| `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form, background music |
+| `about.html` | `/about` | Film summary + sponsors paragraph + filmmaker bios (Rizik, Wooley, Dickmann, Martin, B. Wooley, VAS Communications) |
+| `press.html` | `/press` | 14 press features from JACC, PBS, TCTMD, MM+M, DAIC, HonorHealth, Rocky Mountain Emmy, etc. |
 | `vercel.json` | — | `cleanUrls: true` + security headers (X-Content-Type-Options, X-Frame-Options) |
 | `favicon.svg` | `/favicon.svg` | Amber "SD" monogram on dark background |
+| `SD-music.mp3` | `/SD-music.mp3` | Background music track (~580KB), plays via nav toggle |
 | `images/` | — | Hero banner, nav logo, Emmy icon, ORSIF logo, webinar images, OG image |
 | `transcripts/` | — | 9 episode transcripts + `pull-quotes.md` curated reference |
 | `fetch_transcripts.py` | — | Script to re-fetch transcripts via `youtube-transcript-api` |
@@ -30,7 +31,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Site Architecture — `index.html`
 
 Sections in order:
-1. **Nav** — Logo + Episodes / Press / About / Contact links + LinkedIn icon (Episodes anchors to `#episodes` episode grid; "The Procedure" link removed)
+1. **Nav** — Logo + Episodes / Press / About / Contact links + Music toggle (speaker icon) + LinkedIn icon (Episodes anchors to `#episodes` episode grid)
 2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button
 3. **Recognition Strip** — "2025 Rocky Mountain Emmy Award Winner" with Emmy icon, thin amber rules
 4. **Episode 7 Feature** — Latest episode video facade (ID: `1xvupe3PZPA`), positioned early for immediate access
@@ -42,20 +43,20 @@ Sections in order:
 10. **About** — Series description (7-part docuseries)
 11. **Quote Interstitial #3** — Dr. Rizik quote ("moral imperative" in amber, linked to JSCAI article)
 12. **ORSIF Webinar** — Image link to Radcliffe Cardiology webinar
-13. **Latest News + Join ORSIF** — Merged 2-column grid
+13. **Join ORSIF** — Centered card with ORSIF logo and CTA (Latest News section removed)
 14. **Contact** — Name/email/subject/message form with thank-you state (placeholder, no backend yet)
 15. **Footer** — Copyright 2026 + LinkedIn links
 
 ## Site Architecture — `about.html`
 
-1. **Film Summary** — 6 paragraphs covering scope, title meaning, production, PBS broadcast, Emmy win, call to action
+1. **Film Summary** — 7 paragraphs covering scope, title meaning, production, PBS broadcast, Emmy win, call to action, sponsors (HonorHealth Foundation + ORSIF)
 2. **Filmmaker Bios** — Featured card for Dr. Rizik + 2x2 grid for Wooley, Dickmann, Martin, B. Wooley + VAS Communications card. Monogram avatars (placeholder for real photos).
 
 ## Site Architecture — `press.html`
 
-1. **Count Strip** — 13 features / 8 publications / 5+ PBS stations
+1. **Count Strip** — 14 features / 8 publications / 5+ PBS stations
 2. **Featured Article** — JACC journal piece (Dec 2024) in large card
-3. **Press Grid** — 10 articles in 2-column cards with color-coded category tags (amber=Press, blue=Academic, green=Broadcast, purple=Industry)
+3. **Press Grid** — 11 articles in 2-column cards with color-coded category tags (amber=Press, blue=Academic, green=Broadcast, purple=Industry, gold=Award). Rocky Mountain Emmy card spans full width with Emmy trophy image, gold glow, and gradient background.
 4. **PBS Stations Banner** — National broadcast reach
 
 ### Layout compression (Feb 2026)
@@ -63,7 +64,7 @@ The layout was compressed ~37% from ~7000px to ~4400px on desktop:
 - Quote interstitials: content-driven height with `py-16 md:py-20`
 - All content sections: `py-12 md:py-16`
 - Episode 7 moved above Quote #1 for early video visibility
-- Latest News and Join ORSIF merged into single 2-column section
+- Latest News removed; Join ORSIF is now a standalone centered card (`max-w-3xl`)
 - Hero: `min-h-[50vh] md:min-h-[60vh]`
 
 ## Design System
@@ -72,6 +73,7 @@ The layout was compressed ~37% from ~7000px to ~4400px on desktop:
 - **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
 - **Signature moves:** Static film grain overlay (SVG fractalNoise, 3.5% opacity — animation removed to prevent flicker), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, rotating quotes/stats with fade transitions, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver), color-coded category tags on press page, monogram avatars on about page
 - **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, both removed from DOM when iframe loads
+- **Background music:** `SD-music.mp3` plays at 15% volume via nav toggle (speaker icon). Loops continuously, preference saved in localStorage, auto-pauses when YouTube video is clicked. Respects browser autoplay policies (requires user interaction on first visit).
 - **Favicon:** SVG — amber "SD" monogram on dark rounded square
 - **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
@@ -117,7 +119,7 @@ Always follow the 5-phase process in `SKILL.md`:
 |------|-----|
 | `Scattered-Denial_documentary_Now-Streaming_ORSIF_4-28-24_LOGO-extract.webp` (44KB) | Hero banner |
 | `Scattered-Denial_docuseries_...logo.png` (93KB) | Nav logo |
-| `Emmy-award.png` (776KB) | Emmy icon (recognition strip only) |
+| `Emmy-award.png` (776KB) | Emmy icon (recognition strip on index + press page award card) |
 | `orsif-logo-white.png` | ORSIF logo (Join ORSIF card) |
 | `Scattered-Denial_webinar_ORSIF_2024.png` (756KB) | Webinar section (desktop) |
 | `image_desktop.webp` (57KB) | Webinar section (mobile via `<picture>`) |
