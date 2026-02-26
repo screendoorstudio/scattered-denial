@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Scattered Denial | The Occupational Dangers of Radiation</title>
+    <meta name="description" content="About Scattered Denial, the Emmy-winning documentary series on occupational radiation hazards in cardiology. Meet the filmmakers behind the series.">
+    <meta property="og:site_name" content="Scattered Denial">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://scattereddenial.com/about">
+    <meta property="og:title" content="About — Scattered Denial">
+    <meta property="og:description" content="About the Emmy-winning documentary series and the filmmakers behind it.">
+    <meta property="og:image" content="https://scattereddenial.com/images/Scattered-Denial_The-Occupational-Dangers-of-Radiation_docuseries.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        body: ['"DM Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        bg: { primary: '#0a0a0b', secondary: '#111113', card: '#18181b' },
+                        txt: { primary: '#fafafa', secondary: '#a1a1aa' },
+                        accent: { DEFAULT: '#f59e0b', hover: '#fbbf24' },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent: #f59e0b;
+            --accent-hover: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(1) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before { display: none; }
+            .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .stagger-children.visible > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-logo { height: 40px; width: auto; }
+        @media (min-width: 768px) { .nav-logo { height: 48px; } }
+
+        .recognition-rule {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+            opacity: 0.3;
+        }
+
+        /* Monogram avatar */
+        .monogram {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.04));
+            color: var(--accent);
+        }
+
+        /* Bio card */
+        .bio-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+        .bio-card:hover {
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center">
+            <img src="images/Scattered-Denial_docuseries_SCATTERED DENIAL_THE OCCUPATIONAL DANGERS OF RADIATION_logo.png"
+                 alt="Scattered Denial logo"
+                 class="nav-logo">
+        </a>
+        <div class="flex items-center gap-4 sm:gap-6">
+            <a href="/about" class="text-accent font-display font-500 text-sm">About</a>
+            <a href="/press" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Press</a>
+            <a href="/#contact" class="text-txt-secondary hover:text-accent transition-colors font-display font-500 text-sm">Contact</a>
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Follow on LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<section class="pt-28 pb-6 md:pt-36 md:pb-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-3 fade-up">About the Film</p>
+        <h1 class="font-display font-700 text-4xl md:text-6xl leading-tight mb-6 fade-up">Scattered Denial</h1>
+        <p class="font-display font-300 text-xl md:text-2xl text-txt-secondary leading-relaxed max-w-3xl fade-up">The Occupational Dangers of Radiation</p>
+    </div>
+</section>
+
+<!-- Film Summary -->
+<section class="py-10 md:py-14 fade-up">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-6 font-body text-txt-secondary text-lg leading-relaxed">
+            <p>
+                Every day across the globe, interventional cardiologists and their teams walk into cardiac catheterization laboratories and expose themselves to ionizing radiation to save lives. They guide stents, valves, pacemakers, and other devices through the vascular system using real-time x-ray imaging&mdash;standing just feet from the radiation source, sometimes for hours at a stretch, wearing lead aprons that weigh 30 to 40 pounds.
+            </p>
+            <p>
+                <span class="text-accent font-display font-500">Scattered Denial: The Occupational Dangers of Radiation</span> is a seven-part documentary series that exposes what decades of this work have done to the people behind the masks. The series documents physicians who developed left-sided brain tumors, skin cancers clustered on the side of their bodies closest to the radiation beam, and career-ending spinal injuries from years of bearing the weight of lead. It features the families of those who didn&rsquo;t survive.
+            </p>
+            <p>
+                The title comes from the two forces at the center of the story: <em>scatter</em>&mdash;the radiation that bounces off the patient and strikes everyone in the room&mdash;and <em>denial</em>&mdash;the medical profession&rsquo;s decades-long refusal to confront what that exposure was doing to its own.
+            </p>
+            <p>
+                Narrated and executive produced by <strong class="text-txt-primary">Dr. David G. Rizik</strong>, a veteran interventional cardiologist at HonorHealth in Scottsdale, Arizona, the series was filmed across the country over multiple years. Principal photography revealed that approximately 50% of the interventional cardiologists and cath lab nurses the filmmakers met reported orthopedic injuries, and a staggering number had been diagnosed with cancers that tracked the geometry of their radiation exposure.
+            </p>
+            <p>
+                The six-part series premiered on April 28, 2024 on ScatteredDenial.org. A one-hour version was reformatted for public television and aired nationally on PBS beginning July 2024, reaching stations including Arizona PBS, WOSU (Ohio), and KET (Kentucky). In 2025, the series was honored with a <strong class="text-txt-primary">Rocky Mountain Emmy Award</strong>. A seventh episode, <em>What Has Changed?</em>, followed in late 2024, documenting the new alliances, technologies, and legislative efforts that emerged in the wake of the film.
+            </p>
+            <p>
+                The series is not just a chronicle of harm&mdash;it is a call to action. It argues that the technology to virtually eliminate occupational radiation exposure already exists, and that the only barrier is institutional will.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Divider -->
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+    <div class="recognition-rule"></div>
+</div>
+
+<!-- Filmmakers -->
+<section class="py-14 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-accent font-display font-500 text-xs tracking-widest uppercase mb-3 fade-up">The Team</p>
+        <h2 class="font-display font-700 text-3xl md:text-5xl mb-12 fade-up">The Filmmakers</h2>
+
+        <!-- David Rizik — Featured -->
+        <div class="bio-card mb-8 fade-up">
+            <div class="flex flex-col sm:flex-row gap-6">
+                <div class="monogram">DR</div>
+                <div class="flex-1">
+                    <h3 class="font-display font-700 text-xl md:text-2xl mb-1">Dr. David G. Rizik, MD, MSCAI</h3>
+                    <p class="text-accent font-display font-500 text-sm mb-4">Executive Producer &amp; Narrator</p>
+                    <div class="space-y-3 font-body text-txt-secondary text-sm leading-relaxed">
+                        <p>
+                            Dr. David Rizik is the Chief Scientific Officer and Director of Structural Heart and Coronary Interventions at HonorHealth and founder of the HonorHealth Heart Group in Scottsdale, Arizona. A board-certified interventional cardiologist, he has practiced in Maricopa County for over 33 years, specializing in catheter-based treatment of complex coronary artery disease and advanced valvular heart disease.
+                        </p>
+                        <p>
+                            Dr. Rizik earned his medical degree from St. Louis University, completed his residency at Barnes-Jewish Hospital/Washington University, and fellowships in cardiovascular disease and interventional cardiology at William Beaumont Hospital in Royal Oak, Michigan. He has published over 100 manuscripts and book chapters and was the principal investigator of the first U.S. drug-eluting stent trial. In 2018, he received the designation of Master Interventionalist from the Society for Cardiovascular Angiography and Interventions (SCAI).
+                        </p>
+                        <p>
+                            A three-time Emmy Award winner, Dr. Rizik conceived <em>Scattered Denial</em> after witnessing colleagues develop cancers and debilitating orthopedic injuries over the course of his career. In 2023, he led HonorHealth Research Institute to become one of the first providers in the U.S. to install advanced radiation shielding systems in its catheterization laboratories. His companion essay, &ldquo;Scattered Denial: Reflections on the Occupational Hazards and Health Risks Over a 35-Year Career in Interventional Cardiology,&rdquo; was published in the <em>Journal of the American College of Cardiology</em> (JACC) in December 2024.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Production Team Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children">
+
+            <!-- Chris Wooley -->
+            <div class="bio-card">
+                <div class="flex gap-5">
+                    <div class="monogram">CW</div>
+                    <div class="flex-1">
+                        <h3 class="font-display font-700 text-lg mb-1">Chris Wooley</h3>
+                        <p class="text-accent font-display font-500 text-sm mb-3">Cinematography &amp; Producer</p>
+                        <p class="font-body text-txt-secondary text-sm leading-relaxed">
+                            Five-time Emmy Award&ndash;winning producer and director specializing in biomedical communications. Owner and Managing Producer of VAS Communications, a multimedia production agency based in Phoenix, Arizona, founded in 1971. With over 30 years of experience as a producer, director, writer, director of photography, and editor, Wooley has produced broadcast documentaries, live surgical broadcasts, and medical programming in more than a dozen countries worldwide.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wayne Dickmann -->
+            <div class="bio-card">
+                <div class="flex gap-5">
+                    <div class="monogram">WD</div>
+                    <div class="flex-1">
+                        <h3 class="font-display font-700 text-lg mb-1">Wayne Dickmann</h3>
+                        <p class="text-accent font-display font-500 text-sm mb-3">Cinematography, Music &amp; Editing</p>
+                        <p class="font-body text-txt-secondary text-sm leading-relaxed">
+                            A four-time Emmy Award winner and 10-time Telly Award recipient, Dickmann joined VAS Communications in 1994 and has been a core member of the production team for three decades. Named Arizona Filmmaker of the Year in 2002, he brings expertise in cinematography, original music composition, and post-production editing to the series.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jeff Martin -->
+            <div class="bio-card">
+                <div class="flex gap-5">
+                    <div class="monogram">JM</div>
+                    <div class="flex-1">
+                        <h3 class="font-display font-700 text-lg mb-1">Jeff Martin</h3>
+                        <p class="text-accent font-display font-500 text-sm mb-3">Cinematography</p>
+                        <p class="font-body text-txt-secondary text-sm leading-relaxed">
+                            A skilled director of photography whose camera work captures both the clinical precision of the catheterization laboratory and the deeply personal stories of the physicians and families featured in the series. Martin&rsquo;s cinematography helps bring visual urgency to a story that has long remained invisible.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brett Wooley -->
+            <div class="bio-card">
+                <div class="flex gap-5">
+                    <div class="monogram">BW</div>
+                    <div class="flex-1">
+                        <h3 class="font-display font-700 text-lg mb-1">Brett Wooley</h3>
+                        <p class="text-accent font-display font-500 text-sm mb-3">Associate Producer</p>
+                        <p class="font-body text-txt-secondary text-sm leading-relaxed">
+                            An Operations Associate at VAS Communications and Rocky Mountain Emmy Award winner, Wooley has helped produce programming for Arizona PBS and AZTV and has supported live medical conference broadcasts worldwide. He holds a degree from Arizona State University&rsquo;s W. P. Carey School of Business and a J.D. from the Sandra Day O&rsquo;Connor College of Law at ASU.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Production Company -->
+        <div class="mt-12 bg-bg-secondary border border-white/5 rounded-xl p-8 md:p-10 fade-up">
+            <div class="flex flex-col sm:flex-row items-start gap-6">
+                <div class="monogram" style="width: 60px; height: 60px; font-size: 1rem;">VAS</div>
+                <div>
+                    <h3 class="font-display font-700 text-lg mb-1">VAS Communications</h3>
+                    <p class="text-accent font-display font-500 text-sm mb-3">Production Company &middot; Phoenix, AZ</p>
+                    <p class="font-body text-txt-secondary text-sm leading-relaxed max-w-2xl">
+                        Founded in 1971, VAS Communications is a multimedia production agency specializing in biomedical and healthcare content. The company has produced broadcast documentaries, live satellite surgical broadcasts, and corporate films, with work spanning more than a dozen countries. The VAS team has earned multiple Rocky Mountain Emmy Awards and dozens of Telly Awards for its medical programming.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="font-body text-txt-secondary text-sm">Copyright 2026. All Rights Reserved. The Procedure, LLC</p>
+        <div class="flex items-center gap-5">
+            <a href="https://linkedin.com/showcase/scattered-denial" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors" aria-label="Scattered Denial on LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/the-latest-procedure/" target="_blank" rel="noopener noreferrer"
+               class="text-txt-secondary hover:text-accent transition-colors text-sm font-body">
+                The Procedure, LLC
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                if (el.classList.contains('stagger-children')) {
+                    el.classList.add('visible');
+                    Array.from(el.children).forEach((child, i) => {
+                        child.style.transitionDelay = `${i * 100}ms`;
+                    });
+                } else {
+                    el.classList.add('visible');
+                }
+                animObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up, .stagger-children').forEach(el => {
+        animObserver.observe(el);
+    });
+</script>
+
+</body>
+</html>
