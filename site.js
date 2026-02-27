@@ -41,6 +41,33 @@
     });
 
     // ========================================
+    // Mobile Menu
+    // ========================================
+    var menuToggle = document.getElementById('mobile-menu-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var hamburgerIcon = document.getElementById('hamburger-icon');
+    var closeIcon = document.getElementById('close-icon');
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+    }
+
+    menuToggle.addEventListener('click', function() {
+        var isOpen = mobileMenu.classList.toggle('open');
+        hamburgerIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+    });
+
+    // Close mobile menu when a link inside it is clicked
+    mobileMenu.addEventListener('click', function(e) {
+        if (e.target.closest('a')) {
+            closeMobileMenu();
+        }
+    });
+
+    // ========================================
     // Parallax (harmless on non-index pages)
     // ========================================
     var ticking = false;
@@ -141,6 +168,7 @@
                     if (newTitle) document.title = newTitle.textContent;
                     if (pushState) history.pushState({}, '', url);
                     updateActiveNav(path);
+                    closeMobileMenu();
                     initPage();
 
                     if (hash) {
