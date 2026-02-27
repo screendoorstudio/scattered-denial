@@ -19,10 +19,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | File | Route | Purpose |
 |------|-------|---------|
 | `index.html` | `/` | Main site — hero, episodes, quotes, stats, contact form |
-| `about.html` | `/about` | Film summary + sponsors paragraph + filmmaker bios (Rizik, Wooley, Dickmann, Martin, B. Wooley, VAS Communications) |
+| `about.html` | `/about` | Film summary + sponsors paragraph + filmmaker bios + Dec 2025 update letter (Episode 8 announcement + donation CTA) |
 | `press.html` | `/press` | 14 press features from JACC, PBS, TCTMD, MM+M, DAIC, HonorHealth, Rocky Mountain Emmy, etc. |
 | `site.css` | `/site.css` | All custom CSS merged from all pages (single source of truth) |
-| `site.js` | `/site.js` | Shared JS: audio player, SPA navigation, animation init, parallax |
+| `site.js` | `/site.js` | Shared JS: audio player, mobile menu, SPA navigation, animation init, parallax |
 | `SD-music.mp3` | `/SD-music.mp3` | Background music track (~580KB), plays via nav toggle |
 | `vercel.json` | — | `cleanUrls: true` + security headers (X-Content-Type-Options, X-Frame-Options) |
 | `favicon.svg` | `/favicon.svg` | Amber "SD" monogram on dark background |
@@ -33,7 +33,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Site Architecture — `index.html`
 
 Sections in order:
-1. **Nav** — Logo + Episodes / Press / About / Contact links + Music toggle (speaker icon) + LinkedIn icon (Episodes anchors to `#episodes` episode grid)
+1. **Nav** — Logo + desktop nav links (Episodes / Press / About / Contact, hidden on mobile) + Music toggle + LinkedIn icon + hamburger menu (mobile only, slide-down panel). Episodes anchors to `#episodes`, Contact anchors to `#contact`. Only Press and About have `data-nav` for active page highlighting.
 2. **Hero** — Banner image with glow + parallax (`min-h-[50vh] md:min-h-[60vh]`), trailer CTA + LinkedIn button
 3. **Recognition Strip** — "2025 Rocky Mountain Emmy Award Winner" with Emmy icon, thin amber rules
 4. **Episode 7 Feature** — Latest episode video facade (ID: `1xvupe3PZPA`), positioned early for immediate access
@@ -53,6 +53,7 @@ Sections in order:
 
 1. **Film Summary** — 7 paragraphs covering scope, title meaning, production, PBS broadcast, Emmy win, call to action, sponsors (HonorHealth Foundation + ORSIF)
 2. **Filmmaker Bios** — Featured card for Dr. Rizik + 2x2 grid for Wooley, Dickmann, Martin, B. Wooley + VAS Communications card. Monogram avatars (placeholder for real photos).
+3. **Update Letter (Dec 2025)** — Letter-style card with amber accent line. Covers series achievements (PBS, 50K+ views, Emmy, conferences), Episode 8: New Frontiers announcement (Summer 2026 premiere target), and donation CTA via Arizona Heart Foundation 501(c)(3). "Contact Us" button links to `/#contact`.
 
 ## Site Architecture — `press.html`
 
@@ -69,7 +70,8 @@ The site uses client-side navigation to keep background music uninterrupted acro
 - **Page-specific JS:** Scripts inside `<main>` tagged with `data-page-script` are re-executed after each SPA swap (e.g., video facades, quote word-reveal, rotating quotes, contact form on index.html).
 - **Shared JS in `site.js`:** Audio player, SPA router, IntersectionObserver animations, parallax — runs once on initial load, re-inits animations after each swap.
 - **CSS:** All custom styles live in `site.css` (merged superset from all pages). Tailwind CDN generates utility classes dynamically via MutationObserver, so new classes in swapped content are handled automatically.
-- **Active nav state:** `data-nav` attributes on nav links are matched against `window.location.pathname` to highlight the current page.
+- **Active nav state:** Only page-level links (Press, About) carry `data-nav` attributes, matched against `window.location.pathname`. Section anchors (Episodes → `/#episodes`, Contact → `/#contact`) intentionally lack `data-nav` to avoid multiple links highlighting on the home page.
+- **Mobile nav:** Hamburger menu (visible below `md` breakpoint) toggles a slide-down panel via `max-height` CSS transition. Menu auto-closes on link tap and on SPA navigation. Desktop nav links use `hidden md:flex`.
 - **Image paths:** All `src` attributes use absolute paths (`/images/...`) so content renders correctly regardless of which page is the SPA shell.
 - **Fallback:** If fetch fails, falls back to normal `window.location.href` navigation.
 - **Back/forward:** `popstate` event triggers re-fetch and content swap.
@@ -163,7 +165,7 @@ All 9 YouTube video transcripts extracted via `youtube-transcript-api` (Python).
 ## Pending / Next Steps
 
 - **DNS:** Point `scattereddenial.com` A records (`@` and `www`) to `76.76.21.21` at registrar
-- **Contact form backend:** Wire up the placeholder form to Formspree, Vercel serverless function, or similar
+- **Contact form backend:** Wire up the placeholder form to Resend + Vercel API route (planned approach: `api/contact.js` serverless function, sends to 4 recipients). Blocked on client domain access for Resend domain verification. Recipients: `jake@screendoorstudio.com`, `davidrizik@aol.com`, `evenkeelpro@gmail.com`, `CWooley@vasaz.com`
 - **Filmmaker photos:** Replace monogram avatars on `/about` with real headshots (with permission)
 - **Analytics:** Add Vercel Analytics or Plausible for traffic tracking
 
