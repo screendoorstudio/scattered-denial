@@ -39,7 +39,7 @@ Sections in order:
 4. **Episode 7 Feature** — Latest episode video facade (ID: `1xvupe3PZPA`), positioned early for immediate access
 5. **Quote Interstitial #1** — Dr. Rizik quote ("scatter/denial") with word-by-word scroll reveal
 6. **Rotating Quotes & Stats** — Random pull quote + 3 random stats from a pool of 20 quotes and 12 stats, reshuffled via "Refresh for more" button (no page reload). ~4,400 possible combinations.
-7. **Episode Grid (1–6)** (`id="episodes"`) — Asymmetric layout: Ep 1–2 large (2-col), Ep 3–6 smaller (4-col). Nav "Episodes" link anchors here.
+7. **Episode Grid (1–7)** (`id="episodes"`) — Ep 1–3 top row (3-col), Ep 4–7 bottom row (4-col). Nav "Episodes" link anchors here.
 8. **Quote Interstitial #2** — Dr. Diethrich quote ("I felt that this radiation cannot hurt me"), "succumbed to brain tumor, 2017"
 9. **PBS Version** — Full-width video facade (ID: `swpKf8BTidw`)
 10. **About** — Series description (7-part docuseries)
@@ -88,9 +88,9 @@ The layout was compressed ~37% from ~7000px to ~4400px on desktop:
 
 - **Typography:** Space Grotesk (headings, 300/500/700) + DM Sans (body, 400/500)
 - **Palette:** Near-black bg (`#0a0a0b`), card bg (`#18181b`), amber accent (`#f59e0b`), white text (`#fafafa`), muted gray (`#a1a1aa`)
-- **Signature moves:** Static film grain overlay (SVG fractalNoise, 3.5% opacity — animation removed to prevent flicker), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, rotating quotes/stats with fade transitions, asymmetric episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver), color-coded category tags on press page, monogram avatars on about page
+- **Signature moves:** Static film grain overlay (SVG fractalNoise, 3.5% opacity — animation removed to prevent flicker), hero glow + parallax, quote interstitials with word-by-word reveal + amber border framing, rotating quotes/stats with fade transitions, 3+4 episode grid, amber-bordered cards with hover lift, staggered fade-in children, `.fade-up` / `.fade-left` scroll animations (IntersectionObserver), color-coded category tags on press page, monogram avatars on about page
 - **Video strategy:** Click-to-load YouTube facades (9 videos total) — thumbnail + play button, both removed from DOM when iframe loads
-- **Background music:** `SD-music.mp3` plays at 15% volume via nav toggle (speaker icon). Loops continuously, preference saved in localStorage, auto-pauses when YouTube video is clicked. Respects browser autoplay policies (requires user interaction on first visit). Music persists uninterrupted across page navigations via SPA architecture.
+- **Background music:** `SD-music.mp3` plays at 25% volume via nav toggle (speaker icon). Loops continuously, preference saved in localStorage, auto-pauses when YouTube video is clicked. Respects browser autoplay policies (requires user interaction on first visit). Music persists uninterrupted across page navigations via SPA architecture.
 - **Favicon:** SVG — amber "SD" monogram on dark rounded square
 - **Accessibility:** All animations respect `prefers-reduced-motion` (grain, parallax, fade transitions disabled)
 
