@@ -5,7 +5,7 @@
     // Background Music
     // ========================================
     var audio = document.getElementById('bg-music');
-    var VOLUME = 0.15;
+    var VOLUME = 0.25;
     audio.volume = VOLUME;
 
     function updateMusicIcons(playing) {
