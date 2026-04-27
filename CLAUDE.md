@@ -9,10 +9,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Current State (Feb 2026)
 
 - **Live at:** https://scattered-denial.vercel.app (and scattereddenial.com once DNS A records are pointed to `76.76.21.21`)
-- **GitHub:** https://github.com/screendoorstudio/scattered-denial (auto-deploys on push to `main`)
+- **GitHub:** https://github.com/screendoorstudio/scattered-denial (auto-deploys on push to `main`, tagged with topic `scattered-denial`)
 - **Vercel team:** screenteam (org ID: `team_lFuERAc0hMF2udyy9HgCjPRK`)
 - **GitHub account:** screendoorstudio
 - **DNS pending:** Domain `scattereddenial.com` needs A records (`@` and `www` → `76.76.21.21`) set at the registrar (currently on Network Solutions nameservers)
+- **Cross-machine commit identity:** The `screendoorstudio` GitHub account has "Block command line pushes that expose my email" enabled. On any new machine, run once: `git config --global user.name "screendoorstudio" && git config --global user.email "245490307+screendoorstudio@users.noreply.github.com"`
 
 ### Site Structure
 
